@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+    <meta charset="UTF-8">
+    <title>Darova bandity!!!</title>
+    <link rel="stylesheet" type="text/css" href="css/style2.css">
+</head>
+<body>
+
+<h1>Form</h1>
+<form action="edit.html" method="GET">
+    <label for="imie">Imię:</label><br>
+    <input id="imie" name="nazwa_pola" type="text"/><br><br>
+
+    <label for="tresc">Tresc:</label><br>
+
+    <select id="tresc" name="Tresc">
+        <option>Treść 1</option>
+        <option>Treść 2</option>
+        <option>Treść 3</option>
+        <option>Treść 4</option>
+        <option value=”PL”>Polska</option>
+    </select><br><br>
+
+    <label for="text_area">Text area:</label><br>
+    <textarea id="text_area" name="text_area" rows="15" cols="30"></textarea><br><br>
+
+    <label>Wybur:</label><br>
+    <input id="net" type="radio" name="wybur" value="net" checked/>
+    <label for="net">net</label><br>
+
+    <input id="da" type="radio" name="wybur" value="da"/>
+    <label for="da">da</label><br>
+
+    <input id="nie_znayu" type="radio" name="wybur" value="nie znayu"/>
+    <label for="nie_znayu">nie znayu</label><br>
+
+    <br><br>
+
+    <label>Wybur dwa:</label><br>
+    <input id="kek" type="checkbox" name="wybur2" value="kek" checked/>
+    <label for="kek">kek</label><br>
+
+    <input id="cheburek" type="checkbox" name="wybur2" value="cheburek"/>
+    <label for="cheburek">cheburek</label><br>
+
+    <input id="vek" type="checkbox" name="wybur2" value="vek"/>
+    <label for="vek">vek</label><br>
+    <br><br>
+
+    <input type="submit" value="Zatwierdź"/>
+    <input type="reset" value="Wyczyść"/>
+</form>
+
+</body>
+</html>

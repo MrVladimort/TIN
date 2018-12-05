@@ -1,0 +1,18 @@
+form {
+    background-color: teal;
+    border: 1px solid black;
+}
+
+select, textarea, input[type='text'] {
+    background-color: lightgreen;
+    border: 1px solid black;
+}
+
+input[type="submit"], input[type="reset"] {
+    background-color: antiquewhite;
+    border: 1px solid black;
+}
+
+label {
+    color: white;
+}

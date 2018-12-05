@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="">
+
+<head>
+    <meta charset="utf-8">
+    <title>Title</title>
+
+    <script>
+        function validateEmail(email) {
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        function validate() {
+            const email = document.getElementById("email").value;
+            const nrIndeksu = document.getElementById("nrindeksu").value;
+
+            if (!nrIndeksu.trim() || isNaN(nrIndeksu)) {
+                alert("Walidacja nie jest udana: nrIndeksu");
+                return false;
+            }
+
+            if (!validateEmail(email)) {
+                alert("Walidacja nie jest udana: email");
+                return false;
+            }
+
+            alert("Walidacja jest udana");
+            return true;
+        }
+    </script>
+</head>
+
+<body>
+<label for="email">Email</label><input type="text" id="email" value="vova@gmail.com">
+<label for="nrindeksu">NrIndeksu</label><input type="text" id="nrindeksu" value="123">
+<button onclick="validate()">Validate</button>
+</body>
+</html>

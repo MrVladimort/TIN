@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script>
+        let student = null;
+
+        class Student {
+            constructor({imie, nazwisko, nrIndeksu, oceny}) {
+                this.imie = imie;
+                this.oceny = oceny;
+                this.nazwisko = nazwisko;
+                this.nrIndeksu = nrIndeksu;
+            }
+
+            obliczSrednia () {
+                const arrSum = arr => arr.reduce((a, b) => a + b, 0);
+                const arrAvg = arr => arrSum(arr) / arr.length;
+
+                return arrAvg(this.oceny);
+            }
+
+            toString() {
+                return `Imie:${this.imie}\n Nazwisko:${this.nazwisko}\n NrIndeksu:${this.nrIndeksu}\n Oceny:[${this.oceny}]\n Srednia:${this.obliczSrednia()}`
+            }
+        }
+
+        function submit() {
+            if (!student) {
+                const oceny = document.getElementById("oceny").value.split(',').map(Number);
+                const imie = document.getElementById("imie").value;
+                const nazwisko = document.getElementById("nazwisko").value;
+                const nrIndeksu = document.getElementById("nrindeksu").value;
+
+                student = new Student({imie, nazwisko, oceny, nrIndeksu});
+
+                document.getElementById("student").innerText = student.toString();
+            } else alert("Student already exist")
+        }
+
+        function edit() {
+            if (student) {
+                const oceny = document.getElementById("oceny").value.split(',').map(Number);
+                const imie = document.getElementById("imie").value;
+                const nazwisko = document.getElementById("nazwisko").value;
+                const nrIndeksu = document.getElementById("nrindeksu").value;
+
+                if (imie) student.imie = imie;
+                if (nazwisko) student.nazwisko = nazwisko;
+                if (nrIndeksu) student.nrIndeksu = nrIndeksu;
+                if (oceny) student.oceny = oceny;
+
+                document.getElementById("student").innerText = student.toString();
+            }
+        }
+    </script>
+</head>
+<body>
+<label for="imie">Imie</label><input type="text" id="imie" value="">
+<label for="nazwisko">Nazwisko</label><input type="text" id="nazwisko" value="">
+<label for="nrindeksu">NrIndeksu</label><input type="text" id="nrindeksu" value="">
+<label for="oceny">Oceny</label><input type="text" id="oceny" value="">
+
+<button onclick="submit()">Submit</button>
+<button onclick="edit()">Edit</button>
+
+
+<h1 id="student"></h1>
+
+</body>
+</html>

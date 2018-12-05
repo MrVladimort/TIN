@@ -1,0 +1,47 @@
+#main {
+    box-shadow: 5px 5px 10px grey;
+    border-radius: 25px;
+    transform: rotate(5deg);
+}
+
+.contener {
+    display: flex;
+}
+
+.galeria {
+    flex: 30%;
+    justify-content: flex-start;
+    align-items: flex-start;
+}
+
+.article {
+    flex: 70%;
+    justify-content: flex-end;
+    align-items: flex-start;
+}
+
+.text {
+    column-width: 300px;
+    column-gap: 5px;
+}
+
+.textImage {
+    padding: 10px;
+}
+
+@media screen and (max-width: 800px) {
+    .contener {
+        flex-direction: column-reverse;
+    }
+
+    .text {
+        column-count: 1;
+    }
+}
+
+q {
+    color: red;
+    font-size: 30px;
+    quotes: none;
+    float: right;
+}

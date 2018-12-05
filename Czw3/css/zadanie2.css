@@ -1,0 +1,49 @@
+body {
+    background-color: #a0c3ff;
+}
+
+.content {
+    margin: auto;
+    width: 80%;
+    height: 100%;
+    padding: 50px;
+    text-align: center;
+    background-color: #f7ffef;
+    border: 3px solid darkcyan;
+}
+
+.mainImage {
+    display: inline;
+    height: 280px;
+    border: 4px aqua solid;
+    width: 60%;
+}
+
+.articleName {
+    margin: auto;
+    width: 70%;
+    text-align: left;
+    padding: 5px;
+}
+
+.articleNameText {
+    font-size: 30px;
+    border-bottom: 1px solid darkblue;
+    border-left: 4px solid darkblue;
+}
+
+.article {
+    margin: auto;
+    width: 60%;
+    border: 3px solid darkcyan;
+    background-color: #a0c3ff;
+    text-align: justify;
+}
+
+.articleText {
+    margin: 25px;
+}
+
+a:hover {
+    color: red;
+}

@@ -1,0 +1,46 @@
+body {
+    background-color: aquamarine;
+}
+
+h1 {
+    font-family: Arial;
+    font-size: 40px;
+}
+
+p {
+    font-family: "American Typewriter";
+    font-size: 15px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+td, th {
+    border: 1px solid fuchsia;
+}
+
+a {
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+ol {
+    list-style-type: square;
+}
+
+img {
+    border: 2px solid darkblue;
+}
+
+.span1 {
+    color:blue;
+    font-weight: bold
+}
+
+.span2 {
+    color:red;font-style: italic;
+}

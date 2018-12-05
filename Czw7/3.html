@@ -1,0 +1,40 @@
+<html lang="">
+<head>
+    <meta charset="utf-8">
+    <title>Title</title>
+
+    <script>
+        function addFunction() {
+            const table = document.getElementById("table");
+            const imie = document.getElementById("imie");
+            const nazwisko = document.getElementById("nazwisko");
+            const nrIndeksu = document.getElementById("nrindeksu");
+
+            const row = table.insertRow(1);
+
+            const cell1 = row.insertCell(0);
+            const cell2 = row.insertCell(1);
+            const cell3 = row.insertCell(2);
+
+            cell1.innerHTML = imie.value;
+            cell2.innerHTML = nazwisko.value;
+            cell3.innerHTML = nrIndeksu.value;
+        }
+    </script>
+</head>
+<body>
+<label for="imie">Imie</label><input type="text" id="imie" value="">
+<label for="nazwisko">Nazwisko</label><input type="text" id="nazwisko" value="">
+<label for="nrindeksu">NrIndeksu</label><input type="text" id="nrindeksu" value="">
+
+<button onclick="addFunction()">Submit</button>
+
+<table id="table">
+    <tr>
+        <th>Imie</th>
+        <th>Nazwisko</th>
+        <th>NrIndeksu</th>
+    </tr>
+</table>
+</body>
+</html>
