@@ -3,12 +3,12 @@ import _ from "lodash"
 import HttpError from "../errors/http.error";
 import logger from "../services/logger.service";
 
-async function notFound(req: Request, res: Response, next: NextFunction) {
+export async function notFound(req: Request, res: Response, next: NextFunction) {
     next(new HttpError(404, 'Page not found'));
 }
 
-async function errorHandler(err: HttpError, req: Request, res: Response, next: NextFunction) {
-    let errorMsg = `[${new Date().toString()}] "${req.method} ${req.originalUrl}": ${err.message}`;
+export async function errorHandler(err: HttpError, req: Request, res: Response, next: NextFunction) {
+    let errorMsg = `"${req.method} ${req.originalUrl}": ${err.message}`;
     if (req.query && _.keys(req.query).length > 0) {
         errorMsg += ` | query: ${JSON.stringify(req.query)}`;
     }
