@@ -25,7 +25,8 @@
     "winston": "^3.0.0",
     "xregexp": "^4.2.0",
     "moment": "^2.22.2",
-    "mongoose": "^5.3.14"
+    "mongoose": "^5.3.14",
+    "typegoose": "^5.4.1"
   },
   "devDependencies": {
     "@types/node": "^10.12.12",

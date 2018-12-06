@@ -43,12 +43,17 @@
 
 
 import express from "express";
+import mongoose from "mongoose";
+import bodyParser from "body-parser";
+
 import serverConfig from "./configs/server.config";
 import routes from "./routes";
-import mongoose from "mongoose";
 
 const app = express();
 routes(app);
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 async function connectToDb () {
     mongoose.set('debug', true);

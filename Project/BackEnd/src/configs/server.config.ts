@@ -3,6 +3,7 @@ export interface IServerConfig {
     dbURI: string,
     dbOptions: {
         useNewUrlParser: boolean,
+        useCreateIndex: boolean,
     }
 }
 
@@ -11,6 +12,7 @@ const config: IServerConfig = {
     dbURI: "mongodb://admin:admin123@ds127094.mlab.com:27094/tin_pro",
     dbOptions: {
         useNewUrlParser: true,
+        useCreateIndex: true,
     }
 };
 

@@ -1,4 +1,4 @@
-import { Schema, model, Document, Model } from "mongoose";
+/*import { Schema, model, Document, Model } from "mongoose";
 import crypto from "crypto";
 
 export interface IUser {
@@ -15,7 +15,7 @@ export interface IUser {
 export interface IUserDocument extends IUser, Document {
     createdAt: Date,
     updatedAt: Date,
-
+    pass: string
 // instance methods here
     hashAndSetPass ( pass: string ): void
 
@@ -82,10 +82,74 @@ UserSchema.method('verifyPassword', function ( passToCheck: string ): boolean {
     return passHash === user.passHash; // found user with same hash and returned it
 });
 
-// TODO to test
 // call on this.pass = "kek" => do hash on "kek" and apply passSalt and passHash to this
 // called on creation || save??? ya hui znayet esli chestno
-UserSchema.virtual('pass').set(this.hashAndSetPass);
+UserSchema.virtual('pass').set(function ( pass: string ) {
+    const user: IUserDocument = this;
+    user.hashAndSetPass(pass);
+});
+
+UserSchema.virtual('pass').get(function () {
+    const user: IUserDocument = this;
+    return user.passHash;
+});
 
 const User: IUserModel = model<IUserDocument, IUserModel>("User", UserSchema);
 export default User;
+*/
+
+import crypto from "crypto";
+import {instanceMethod, InstanceType, ModelType, prop, staticMethod, Typegoose} from 'typegoose';
+
+const hashPassWithSalt = (pass: string, salt: string): string => crypto.pbkdf2Sync(pass, salt, 64, 128, 'sha512').toString('base64');
+const generateSalt = (): string => crypto.randomBytes(8).toString('hex');
+
+export class User extends Typegoose {
+    @prop({required: true})
+    name?: string;
+
+    @prop({required: true})
+    surname?: string;
+
+    @prop()
+    age?: number;
+
+    @prop({required: true, unique: true})
+    email: string;
+
+    @prop()
+    passHash: string;
+
+    @prop()
+    passSalt: string;
+
+    @prop({default: false})
+    verified: boolean;
+
+    @prop()
+    set pass(this: InstanceType<User>, pass: string) {
+        const user = this;
+        user.hashAndSetPass(pass);
+    };
+
+    @staticMethod
+    static async findOneByEmail(this: ModelType<User> & typeof User, email: string) {
+        return await this.findOne({email}); //... on dumayet shto eto instance method glupyshka
+    }
+
+    @instanceMethod
+    hashAndSetPass(this: InstanceType<User>, pass: string) {
+        console.log("HasAndSetPass function");
+        const user = this;
+
+        const passSalt = generateSalt();
+        const passHash = hashPassWithSalt(pass, passSalt);
+
+        user.passSalt = passSalt;
+        user.passHash = passHash;
+
+        console.log(user);
+    }
+}
+
+export default new User().getModelForClass(User);
