@@ -1,11 +1,11 @@
-// class HttpError extends Error {
-//   constructor(status, message) {
-//     super(message);
-//     this.status = status;
-//     this.message = message;
-//   }
-// }
-//
-// // TODO add error handlers everywhere were it's need
-//
-// module.exports = HttpError;
+class HttpError extends Error {
+    public status: number;
+
+    constructor(status: number, message: string) {
+        super(message);
+        this.status = status;
+        this.message = message;
+    }
+}
+
+export default HttpError;

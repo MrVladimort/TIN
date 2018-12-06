@@ -98,11 +98,17 @@ const User: IUserModel = model<IUserDocument, IUserModel>("User", UserSchema);
 export default User;
 */
 
-import crypto from "crypto";
 import {instanceMethod, InstanceType, ModelType, prop, staticMethod, Typegoose} from 'typegoose';
+import crypto from "crypto";
+import {createAccessToken, createRefreshToken, verifyAccessToken, verifyRefreshToken} from "../helpers/jwt.helper";
 
 const hashPassWithSalt = (pass: string, salt: string): string => crypto.pbkdf2Sync(pass, salt, 64, 128, 'sha512').toString('base64');
 const generateSalt = (): string => crypto.randomBytes(8).toString('hex');
+
+export interface IAuthTokens {
+    accessToken: string,
+    refreshToken?: string,
+}
 
 export class User extends Typegoose {
     @prop({required: true})
@@ -110,9 +116,6 @@ export class User extends Typegoose {
 
     @prop({required: true})
     surname?: string;
-
-    @prop()
-    age?: number;
 
     @prop({required: true, unique: true})
     email: string;
@@ -134,22 +137,62 @@ export class User extends Typegoose {
 
     @staticMethod
     static async findOneByEmail(this: ModelType<User> & typeof User, email: string) {
-        return await this.findOne({email}); //... on dumayet shto eto instance method glupyshka
+        return await this.findOne({email});
+    }
+
+    @staticMethod
+    static async findOneWithAccessToken(this: ModelType<User> & typeof User, token: string) {
+        const email = verifyAccessToken(token);
+        return this.findOneByEmail(email);
     }
 
     @instanceMethod
-    hashAndSetPass(this: InstanceType<User>, pass: string) {
-        console.log("HasAndSetPass function");
-        const user = this;
-
+    hashAndSetPass(this: InstanceType<User>, pass: string): void {
         const passSalt = generateSalt();
         const passHash = hashPassWithSalt(pass, passSalt);
 
-        user.passSalt = passSalt;
-        user.passHash = passHash;
+        this.passSalt = passSalt;
+        this.passHash = passHash;
+    }
 
-        console.log(user);
+    @instanceMethod
+    verifyPassword(this: InstanceType<User>, passToCheck: string): boolean {
+        const passHash = hashPassWithSalt(passToCheck, this.passSalt); // getting hashPass using pass and salt
+        return this.passHash === passHash // found user with same hash and returned it
+    }
+
+    @instanceMethod
+    verifyRefreshToken(this: InstanceType<User>, token: string): boolean {
+        const email = verifyRefreshToken(token);
+        return this.email === email;
+    }
+
+    @instanceMethod
+    generateJWT(this: InstanceType<User>): IAuthTokens {
+        const accessToken = createAccessToken(this.email);
+        const refreshToken = createRefreshToken(this.email);
+
+        return {
+            accessToken,
+            refreshToken
+        };
     }
 }
 
-export default new User().getModelForClass(User);
+const DefaultTransform = {
+    schemaOptions: {
+        toJSON: {
+            virtuals: true,
+            versionKey: false,
+            transform: (doc: InstanceType<User>, ret: InstanceType<User>, options: any) => {
+                delete ret._id;
+                delete ret.passHash;
+                delete ret.passSalt;
+                delete ret.verified;
+                return ret;
+            }
+        }
+    }
+};
+
+export default new User().getModelForClass(User, DefaultTransform);
