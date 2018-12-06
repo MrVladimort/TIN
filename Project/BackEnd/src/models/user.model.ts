@@ -1,4 +1,4 @@
-import {Schema, model, Document, Model} from "mongoose";
+import { Schema, model, Document, Model } from "mongoose";
 import crypto from "crypto";
 
 export interface IUser {
@@ -12,35 +12,38 @@ export interface IUser {
 }
 
 // interface for documents in the model
-export interface IUserModelDocument extends IUser, Document {
-// instance methods here
-    hashAndSetPass(pass: string): void
+export interface IUserDocument extends IUser, Document {
+    createdAt: Date,
+    updatedAt: Date,
 
-    verifyPassword(passToCheck: string): boolean
+// instance methods here
+    hashAndSetPass ( pass: string ): void
+
+    verifyPassword ( passToCheck: string ): boolean
 }
 
 // main interface of model
-export interface IUserModel extends Model<IUserModelDocument> {
+export interface IUserModel extends Model<IUserDocument> {
 // static methods here
-    findOneByEmail(email: string): Promise<IUserModelDocument>
+    findOneByEmail ( email: string ): Promise<IUserDocument>
 }
 
 const UserSchema = new Schema({
     email: {
         type: String,
         trim: true,
-        required: true
+        required: true,
     },
     verified: {
         type: Boolean,
-        default: false
+        default: false,
     },
     name: {
         type: String,
         trim: true,
     },
     age: {
-        type: Number
+        type: Number,
     },
     phone: {
         type: String,
@@ -54,29 +57,35 @@ const UserSchema = new Schema({
         type: String,
         trim: true,
     },
+}, { timestamps: true });
+
+UserSchema.static('findOneByEmail', function ( email: string ) {
+    return this.findOne({ email });
 });
 
-UserSchema.statics.findOneByEmail = (email: string) => this.findOne({email});
-
-const hashPassWithSalt = (pass: string, salt: string): string => crypto.pbkdf2Sync(pass, salt, 64, 128, 'sha512').toString('base64');
+const hashPassWithSalt = ( pass: string, salt: string ): string => crypto.pbkdf2Sync(pass, salt, 64, 128, 'sha512').toString('base64');
 const generateSalt = (): string => crypto.randomBytes(8).toString('hex');
 
-UserSchema.methods.hashAndSetPass = (pass: string): void => {
+UserSchema.method('hashAndSetPass', function ( pass: string ): void {
+    const user: IUserDocument = this;
+
     const passSalt = generateSalt();
     const passHash = hashPassWithSalt(pass, passSalt);
 
-    this.passSalt = passSalt;
-    this.passHash = passHash
-};
+    user.passSalt = passSalt;
+    user.passHash = passHash
+});
 
-UserSchema.methods.verifyPassword = (passToCheck: string): boolean => {
-    const passHash = hashPassWithSalt(passToCheck, this.passSalt); // getting hashPass using pass and salt
-    return passHash === this.passHash; // found user with same hash and returned it
-};
+UserSchema.method('verifyPassword', function ( passToCheck: string ): boolean {
+    const user: IUserDocument = this;
+    const passHash = hashPassWithSalt(passToCheck, user.passSalt); // getting hashPass using pass and salt
+    return passHash === user.passHash; // found user with same hash and returned it
+});
 
+// TODO to test
 // call on this.pass = "kek" => do hash on "kek" and apply passSalt and passHash to this
-// called on creation || save???
+// called on creation || save??? ya hui znayet esli chestno
 UserSchema.virtual('pass').set(this.hashAndSetPass);
 
-const User: IUserModel = model<IUserModelDocument, IUserModel>("User", UserSchema);
+const User: IUserModel = model<IUserDocument, IUserModel>("User", UserSchema);
 export default User;
