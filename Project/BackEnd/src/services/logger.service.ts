@@ -44,9 +44,11 @@ const winstonLogger = createLogger({
                     }
                     break;
             }
-            return `${FourBitColors.CYAN}[${info.label}]${FontsEffects.DEFAULT} | `
-                + `${FourBitColors.YELLOW}[${info.timestamp}]${FontsEffects.DEFAULT} | `
-                + `${FontsEffects.BOLD}${levelSign} ${info.level} ${levelSign}${FontsEffects.DEFAULT} ${info.message}`;
+            return [
+                `${FourBitColors.CYAN}[${info.label}]${FontsEffects.DEFAULT}`,
+                `${FourBitColors.YELLOW}[${info.timestamp}]${FontsEffects.DEFAULT}`,
+                `${FontsEffects.BOLD}${levelSign} ${info.level} ${levelSign}${FontsEffects.DEFAULT} ${info.message}`
+            ].join(" | ");
         }),
     ),
     transports: [
@@ -61,7 +63,7 @@ const winstonLogger = createLogger({
     ],
 });
 
-function morganFormatFunction( tokens: TokenIndexer, req: Request, res: Response ) {
+function morganFormatFunction ( tokens: TokenIndexer, req: Request, res: Response ) {
     const status = Number(tokens.status(req, res));
     let statusColor: FourBitColors;
 
@@ -74,15 +76,15 @@ function morganFormatFunction( tokens: TokenIndexer, req: Request, res: Response
     }
 
     return [
-        `${FourBitColors.MAGENTA + FontsEffects.BOLD}Method: ${tokens.method(req, res) + FontsEffects.DEFAULT}`,
-        `${FourBitColors.BLUE + FontsEffects.BOLD}Url: ${tokens.url(req, res)}`,
-        `${statusColor}${FontsEffects.BOLD}Status Code: ${status + FontsEffects.DEFAULT}`,
+        `${FourBitColors.MAGENTA + FontsEffects.BOLD}Method: ${tokens.method(req, res)}${FontsEffects.DEFAULT}`,
+        `${FourBitColors.BLUE + FontsEffects.BOLD}Url: ${tokens.url(req, res)}${FontsEffects.DEFAULT}`,
+        `${statusColor}${FontsEffects.BOLD}Status Code: ${status}${FontsEffects.DEFAULT}`,
         `${FourBitColors.CYAN + FontsEffects.BOLD}Response Time: ${tokens[ "response-time" ](req, res)}ms${FontsEffects.DEFAULT}`,
         `Protocol: HTTP/${tokens[ "http-version" ](req, res)}`,
         `Content Length: ${tokens.res(req, res, "content-length")} bytes`,
-        `Remote Address: ${tokens["remote-addr"](req, res).substring(0, 30)}`,
+        `Remote Address: ${tokens[ "remote-addr" ](req, res).substring(0, 30)}`,
         `User Agent: ${tokens[ "user-agent" ](req, res)}`,
-    ].join(" - ");
+    ].join(" | ");
 }
 
 const morganLogger = morgan(morganFormatFunction, { stream: { write: ( str: string ) => winstonLogger.info(str) } });
