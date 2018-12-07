@@ -2,11 +2,11 @@ import {prop, Typegoose} from "typegoose";
 
 class Item extends Typegoose {
     @prop({required: true})
-    name: string;
+    public name: string;
     @prop({required: true})
-    price: number;
+    public price: number;
     @prop({required: true})
-    exist: boolean;
+    public exist: boolean;
 }
 
 export default new Item().getModelForClass(Item);

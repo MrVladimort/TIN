@@ -1,20 +1,20 @@
 export interface IServerConfig {
-    port: number
-    dbURI: string,
+    port: number;
+    dbURI: string;
     dbOptions: {
         useNewUrlParser: boolean,
         useCreateIndex: boolean,
-    },
+    };
     jwt: {
         accessSecret: string,
         refreshSecret: string,
         accessOptions: {
-            expiresIn: string
+            expiresIn: string,
         },
         refreshOptions: {
-            expiresIn: string
-        }
-    }
+            expiresIn: string,
+        },
+    };
 }
 
 const config: IServerConfig = {
@@ -28,11 +28,11 @@ const config: IServerConfig = {
         accessSecret: "accessSecret",
         refreshSecret: "refreshSecret",
         accessOptions: {
-            expiresIn: "1d"
+            expiresIn: "1d",
         },
         refreshOptions: {
-            expiresIn: "7d"
-        }
+            expiresIn: "7d",
+        },
     },
 };
 

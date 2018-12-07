@@ -9,7 +9,7 @@ export const verifyAccessToken = (token: string) => {
         const verifiedObj: any = jwt.verify(token, serverConfig.jwt.accessSecret);
         return verifiedObj.email;
     } catch {
-        throw new HttpError(401, "Bad token data")
+        throw new HttpError(401, "Bad token data");
     }
 };
 
@@ -20,6 +20,6 @@ export const verifyRefreshToken = (token: string) => {
         const verifiedObj: any = jwt.verify(token, serverConfig.jwt.refreshSecret);
         return verifiedObj.email;
     } catch {
-        throw new HttpError(401, "Bad token data")
+        throw new HttpError(401, "Bad token data");
     }
 };

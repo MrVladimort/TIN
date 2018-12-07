@@ -1,6 +1,6 @@
-import {Request, Response, NextFunction} from "express";
-import UserModel from "../models/user.model";
+import {NextFunction, Request, Response} from "express";
 import HttpError from "../errors/http.error";
+import UserModel from "../models/user.model";
 
 const refreshTokens: Set<string> = new Set();
 
@@ -13,14 +13,14 @@ export async function withEmailAndPass(req: Request, res: Response, next: NextFu
             const tokens = user.generateJWT();
             refreshTokens.add(tokens.refreshToken);
             res.json({user, tokens});
-        } else throw new HttpError(401, "Bad email or password")
-    } else throw new HttpError(404, "User not found");
+        } else { throw new HttpError(401, "Bad email or password"); }
+    } else { throw new HttpError(404, "User not found"); }
 }
 
 export async function withEmailAndToken(req: Request, res: Response, next: NextFunction) {
     const {email, refreshToken} = req.body;
 
-    if (!refreshTokens.delete(refreshToken)) throw new HttpError(401, "Bad email or token");
+    if (!refreshTokens.delete(refreshToken)) { throw new HttpError(401, "Bad email or token"); }
 
     const user = await UserModel.findOneByEmail(email);
     if (user) {
@@ -28,6 +28,6 @@ export async function withEmailAndToken(req: Request, res: Response, next: NextF
             const tokens = user.generateJWT();
             refreshTokens.add(tokens.refreshToken);
             res.json({user, tokens});
-        } else throw new HttpError(401, "Bad email or token")
-    } else throw new HttpError(404, "User not found");
+        } else { throw new HttpError(401, "Bad email or token"); }
+    } else { throw new HttpError(404, "User not found"); }
 }

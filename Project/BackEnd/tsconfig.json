@@ -1,7 +1,9 @@
 {
   "compileOnSave": true,
   "compilerOptions": {
-    "lib": ["es2018"],
+    "lib": [
+      "es2018"
+    ],
     "alwaysStrict": true,
     "module": "commonjs",
     "target": "es2018",

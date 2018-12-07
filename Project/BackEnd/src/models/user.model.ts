@@ -98,56 +98,56 @@ const User: IUserModel = model<IUserDocument, IUserModel>("User", UserSchema);
 export default User;
 */
 
-import {instanceMethod, InstanceType, ModelType, prop, staticMethod, Typegoose} from 'typegoose';
 import crypto from "crypto";
+import {instanceMethod, InstanceType, ModelType, prop, staticMethod, Typegoose} from "typegoose";
 import {createAccessToken, createRefreshToken, verifyAccessToken, verifyRefreshToken} from "../helpers/jwt.helper";
 
-const hashPassWithSalt = (pass: string, salt: string): string => crypto.pbkdf2Sync(pass, salt, 64, 128, 'sha512').toString('base64');
-const generateSalt = (): string => crypto.randomBytes(8).toString('hex');
+const hashPassWithSalt = (pass: string, salt: string): string => crypto.pbkdf2Sync(pass, salt, 64, 128, "sha512").toString("base64");
+const generateSalt = (): string => crypto.randomBytes(8).toString("hex");
 
 export interface IAuthTokens {
-    accessToken: string,
-    refreshToken?: string,
+    accessToken: string;
+    refreshToken?: string;
 }
 
 export class User extends Typegoose {
-    @prop({required: true})
-    name?: string;
-
-    @prop({required: true})
-    surname?: string;
-
-    @prop({required: true, unique: true})
-    email: string;
-
-    @prop()
-    passHash: string;
-
-    @prop()
-    passSalt: string;
-
-    @prop({default: false})
-    verified: boolean;
 
     @prop()
     set pass(this: InstanceType<User>, pass: string) {
         const user = this;
         user.hashAndSetPass(pass);
-    };
+    }
 
     @staticMethod
-    static async findOneByEmail(this: ModelType<User> & typeof User, email: string) {
+    public static async findOneByEmail(this: ModelType<User> & typeof User, email: string) {
         return await this.findOne({email});
     }
 
     @staticMethod
-    static async findOneWithAccessToken(this: ModelType<User> & typeof User, token: string) {
+    public static async findOneWithAccessToken(this: ModelType<User> & typeof User, token: string) {
         const email = verifyAccessToken(token);
         return this.findOneByEmail(email);
     }
+    @prop({required: true})
+    public name?: string;
+
+    @prop({required: true})
+    public surname?: string;
+
+    @prop({required: true, unique: true})
+    public email: string;
+
+    @prop()
+    public passHash: string;
+
+    @prop()
+    public passSalt: string;
+
+    @prop({default: false})
+    public verified: boolean;
 
     @instanceMethod
-    hashAndSetPass(this: InstanceType<User>, pass: string): void {
+    public hashAndSetPass(this: InstanceType<User>, pass: string): void {
         const passSalt = generateSalt();
         const passHash = hashPassWithSalt(pass, passSalt);
 
@@ -156,25 +156,25 @@ export class User extends Typegoose {
     }
 
     @instanceMethod
-    verifyPassword(this: InstanceType<User>, passToCheck: string): boolean {
+    public verifyPassword(this: InstanceType<User>, passToCheck: string): boolean {
         const passHash = hashPassWithSalt(passToCheck, this.passSalt); // getting hashPass using pass and salt
-        return this.passHash === passHash // found user with same hash and returned it
+        return this.passHash === passHash; // found user with same hash and returned it
     }
 
     @instanceMethod
-    verifyRefreshToken(this: InstanceType<User>, token: string): boolean {
+    public verifyRefreshToken(this: InstanceType<User>, token: string): boolean {
         const email = verifyRefreshToken(token);
         return this.email === email;
     }
 
     @instanceMethod
-    generateJWT(this: InstanceType<User>): IAuthTokens {
+    public generateJWT(this: InstanceType<User>): IAuthTokens {
         const accessToken = createAccessToken(this.email);
         const refreshToken = createRefreshToken(this.email);
 
         return {
             accessToken,
-            refreshToken
+            refreshToken,
         };
     }
 }
@@ -182,17 +182,17 @@ export class User extends Typegoose {
 const DefaultTransform = {
     schemaOptions: {
         toJSON: {
-            virtuals: true,
-            versionKey: false,
             transform: (doc: InstanceType<User>, ret: InstanceType<User>, options: any) => {
                 delete ret._id;
                 delete ret.passHash;
                 delete ret.passSalt;
                 delete ret.verified;
                 return ret;
-            }
-        }
-    }
+            },
+            versionKey: false,
+            virtuals: true,
+        },
+    },
 };
 
 export default new User().getModelForClass(User, DefaultTransform);

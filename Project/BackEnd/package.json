@@ -26,7 +26,9 @@
     "xregexp": "^4.2.0",
     "moment": "^2.22.2",
     "mongoose": "^5.3.14",
-    "typegoose": "^5.4.1"
+    "typegoose": "^5.4.1",
+    "figures": "^2.0.0",
+    "log-symbols": "^2.2.0"
   },
   "devDependencies": {
     "@types/node": "^10.12.12",
@@ -41,6 +43,9 @@
     "@types/xregexp": "^3.0.29",
     "@types/pug": "^2.0.4",
     "@types/body-parser": "^1.17.0",
+    "@types/figures": "^2.0.0",
+    "@types/log-symbols": "^2.0.0",
+    "tslint": "^5.11.0",
     "typescript": "^3.2.1"
   }
 }

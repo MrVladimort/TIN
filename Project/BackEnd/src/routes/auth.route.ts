@@ -1,5 +1,5 @@
 import Router from "express-promise-router";
-import {withEmailAndPass, withEmailAndToken} from "../controllers/auth.controller"
+import {withEmailAndPass, withEmailAndToken} from "../controllers/auth.controller";
 
 const router = Router();
 
