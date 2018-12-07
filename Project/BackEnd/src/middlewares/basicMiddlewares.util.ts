@@ -1,18 +1,18 @@
 import { NextFunction, Request, Response } from "express";
 import _ from "lodash";
+import {magenta, blue, red} from "colors/safe";
 import HttpError from "../errors/http.error";
-import { FontsEffects, FourBitColors, winstonLogger } from "../services/logger.service";
+import { winstonLogger } from "../services/logger.service";
 
 export async function notFound( req: Request, res: Response, next: NextFunction ) {
     next(new HttpError(404, "Page not found"));
 }
 
 export async function errorHandler( err: HttpError, req: Request, res: Response, next: NextFunction ) {
-    let errorMsg = [
-        `${FourBitColors.MAGENTA}${req.method}`,
-        `${FourBitColors.BLUE}${req.originalUrl}`,
-        `${FourBitColors.RED}${err.status || 500}${FontsEffects.DEFAULT} -`,
-        `${FourBitColors.RED}${FontsEffects.BOLD}HttpError: ${err.message}${FontsEffects.DEFAULT}`,
+    let errorMsg: string = [
+        magenta(`${req.method}`),
+        blue(`${req.originalUrl}`),
+        red(`Status code: ${err.status || 500} - Error: ${err.message}`),
     ].join(" ");
 
     if (req.query && _.keys(req.query).length > 0) {

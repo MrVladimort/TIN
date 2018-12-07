@@ -30,14 +30,6 @@ routes(app);
 app.use(notFound);
 app.use(errorHandler);
 
-const test = {
-    kek: "123", lol: {
-        l: "",
-    },
-};
-
-winstonLogger.info(test);
-
 async function connectToDb() {
     mongoose.set("debug", true);
     await mongoose.connect(serverConfig.dbURI, serverConfig.dbOptions);
