@@ -1,6 +1,6 @@
+import {blue, bold, cyan, green, magenta, red, yellow} from "colors/safe";
 import {Request, Response} from "express";
 import figure from "figures";
-import {magenta, red, blue, green, yellow, cyan, bold} from "colors/safe"
 import moment from "moment";
 import morgan, {TokenIndexer} from "morgan";
 import {createLogger, format, transports} from "winston";
@@ -32,7 +32,7 @@ const winstonLogger = createLogger({
                 cyan(`[${info.label}]`),
                 yellow(`[${info.timestamp}]`),
                 bold(`${levelSign} ${info.level} ${levelSign}`),
-                `${typeof info.message === "object" ? JSON.stringify(info.message) : info.message}`
+                `${typeof info.message === "object" ? JSON.stringify(info.message) : info.message}`,
             ].join(" | ");
         }),
     ),
@@ -74,7 +74,7 @@ function morganFormatFunction(tokens: TokenIndexer, req: Request, res: Response)
 
 const morganLogger = morgan(morganFormatFunction, {
     stream: {
-        write: (str: string) => winstonLogger.info(str)
+        write: (str: string) => winstonLogger.info(str),
     },
     // skip: function (req, res) {
     //     return res.statusCode >= 400

@@ -1,6 +1,6 @@
+import {blue, magenta, red} from "colors/safe";
 import { NextFunction, Request, Response } from "express";
 import _ from "lodash";
-import {magenta, blue, red} from "colors/safe";
 import HttpError from "../errors/http.error";
 import { winstonLogger } from "../services/logger.service";
 

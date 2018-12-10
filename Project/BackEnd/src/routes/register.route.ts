@@ -1,5 +1,5 @@
 import Router from "express-promise-router";
-import {register, confirmEmail} from "../controllers/register.controller";
+import {confirmEmail, register} from "../controllers/register.controller";
 
 const router = Router();
 

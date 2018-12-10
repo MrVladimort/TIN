@@ -128,6 +128,7 @@ export class User extends Typegoose {
         const email = verifyAccessToken(token);
         return this.findOneByEmail(email);
     }
+
     @prop({required: true})
     public name?: string;
 
