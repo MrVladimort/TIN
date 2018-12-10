@@ -24,5 +24,5 @@ export async function errorHandler( err: HttpError, req: Request, res: Response,
 
     winstonLogger.error(errorMsg);
     res.status(err.status || 500)
-        .json({ error: err.message || err });
+        .json({ error: err.message || err, status: err.status || 500 });
 }

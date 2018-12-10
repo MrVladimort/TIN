@@ -15,11 +15,23 @@ const winstonLogger = createLogger({
         label({label: "Tin_Pro"}),
         timestamp({format: moment().format()}),
         printf((info) => {
+            let levelSign = "";
+
+            switch (info.level) {
+                case green("info"):
+                    levelSign = green(`${figure.tick}${figure.tick}${figure.tick}`);
+                    break;
+                case red("error"):
+                    levelSign = red(`${figure.cross}${figure.cross}${figure.cross}`);
+                    break;
+                default:
+                    break;
+            }
 
             return [
                 cyan(`[${info.label}]`),
                 yellow(`[${info.timestamp}]`),
-                bold(`${info.level}`),
+                bold(`${levelSign} ${info.level} ${levelSign}`),
                 `${typeof info.message === "object" ? JSON.stringify(info.message) : info.message}`
             ].join(" | ");
         }),
@@ -60,7 +72,14 @@ function morganFormatFunction(tokens: TokenIndexer, req: Request, res: Response)
     ].join(" | ");
 }
 
-const morganLogger = morgan(morganFormatFunction, {stream: {write: (str: string) => winstonLogger.info(str)}});
+const morganLogger = morgan(morganFormatFunction, {
+    stream: {
+        write: (str: string) => winstonLogger.info(str)
+    },
+    // skip: function (req, res) {
+    //     return res.statusCode >= 400
+    // }
+});
 
 export {
     winstonLogger,
