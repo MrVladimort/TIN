@@ -1,0 +1,27 @@
+html
+    head
+        title="Form"
+    body
+        h1="Form"
+        div
+            form(action="formdata", method="POST")
+                label(for='imie') Imię:
+                br
+                input#imie(name='imie', type='text')
+                br
+                br
+
+                label(for='nazwisko') Nazwisko:
+                br
+                input#nazwisko(name='nazwisko', type='text')
+                br
+                br
+
+                label(for='wiek') Wiek:
+                br
+                input#wiek(name='wiek', type='number')
+                br
+                br
+
+                input(type='submit', value='Zatwierdź')
+                input(type='reset', value='Wyczyść')

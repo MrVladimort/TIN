@@ -1,0 +1,21 @@
+{
+  "name": "tin-back",
+  "version": "0.0.1",
+  "private": true,
+  "license": "ISC",
+  "main": "build/App.js",
+  "engines": {
+    "node": ">=10.14.1"
+  },
+  "scripts": {
+    "start": "node ./build/App.js",
+    "development": "nodemon ./build//app.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "express-promise-router": "^3.0.3",
+    "pug": "^2.0.3"
+  },
+  "devDependencies": {}
+}
