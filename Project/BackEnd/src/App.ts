@@ -3,7 +3,7 @@ import express from "express";
 import mongoose from "mongoose";
 
 import serverConfig from "./configs/server.config";
-import { errorHandler, notFound } from "./middlewares/basicMiddlewares.util";
+import { errorHandler, notFound } from "./middlewares/basic.middleware";
 import { User } from "./models/user.model";
 import routes from "./routes";
 import { morganLogger, winstonLogger } from "./services/logger.service";

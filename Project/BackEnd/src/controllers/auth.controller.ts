@@ -11,8 +11,10 @@ export async function withEmailAndPass(req: Request, res: Response, next: NextFu
     if (user) {
         if (user.verifyPassword(pass)) {
             const tokens = user.generateJWT();
+
             refreshTokens.add(tokens.refreshToken);
-            res.json({user, tokens});
+
+            res.json({user, tokens, success: true, status: 200});
         } else { throw new HttpError(401, "Bad email or password"); }
     } else { throw new HttpError(404, "User not found"); }
 }
@@ -26,8 +28,10 @@ export async function withEmailAndToken(req: Request, res: Response, next: NextF
     if (user) {
         if (user.verifyRefreshToken(refreshToken)) {
             const tokens = user.generateJWT();
+
             refreshTokens.add(tokens.refreshToken);
-            res.json({user, tokens});
+
+            res.json({user, tokens, success: true, status: 200});
         } else { throw new HttpError(401, "Bad email or token"); }
     } else { throw new HttpError(404, "User not found"); }
 }

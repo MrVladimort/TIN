@@ -1,16 +1,39 @@
 import {NextFunction, Request, Response} from "express";
+import {validationResult} from "express-validator/check";
+import HttpError from "../errors/http.error";
 import UserModel, {User} from "../models/user.model";
+import {sendRegisterConfirmation} from "../services/email.service";
 
 export async function register(req: Request, res: Response, next: NextFunction) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throw new HttpError(422, "Not valid data");
+    }
+
     const userData: User = req.body;
     const user = new UserModel(userData);
     await user.save();
-    res.json(user);
+
+    const userTokens = user.generateJWT();
+    await sendRegisterConfirmation(user.email, userTokens.accessToken);
+
+    res.json({success: true, status: 200});
 }
 
 export async function confirmEmail(req: Request, res: Response, next: NextFunction) {
-    const userData: User = req.body;
-    const user = new UserModel(userData);
-    await user.save();
-    res.json(user);
+    const token = req.params.token;
+
+    if (!token) {
+        throw new HttpError(401, "Bad token provided");
+    }
+
+    const user = await UserModel.findOneWithAccessToken(token, false);
+    if (user) {
+        user.verified = true;
+        await user.save();
+
+        res.json({success: true, status: 200});
+    } else {
+        throw new HttpError(404, "User not found");
+    }
 }

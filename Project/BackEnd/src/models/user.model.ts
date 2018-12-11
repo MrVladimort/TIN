@@ -100,7 +100,7 @@ export default User;
 
 import crypto from "crypto";
 import {instanceMethod, InstanceType, ModelType, prop, staticMethod, Typegoose} from "typegoose";
-import {createAccessToken, createRefreshToken, verifyAccessToken, verifyRefreshToken} from "../helpers/jwt.helper";
+import {createAccessToken, createRefreshToken, verifyAccessToken, verifyRefreshToken} from "../services/jwt.service";
 
 const hashPassWithSalt = (pass: string, salt: string): string => crypto.pbkdf2Sync(pass, salt, 64, 128, "sha512").toString("base64");
 const generateSalt = (): string => crypto.randomBytes(8).toString("hex");
@@ -119,14 +119,14 @@ export class User extends Typegoose {
     }
 
     @staticMethod
-    public static async findOneByEmail(this: ModelType<User> & typeof User, email: string) {
-        return await this.findOne({email});
+    public static async findOneByEmail(this: ModelType<User> & typeof User, email: string, verified: boolean = true) {
+        return await this.findOne({email, verified});
     }
 
     @staticMethod
-    public static async findOneWithAccessToken(this: ModelType<User> & typeof User, token: string) {
+    public static async findOneWithAccessToken(this: ModelType<User> & typeof User, token: string, verified: boolean = true) {
         const email = verifyAccessToken(token);
-        return this.findOneByEmail(email);
+        return this.findOneByEmail(email, verified);
     }
 
     @prop({required: true})
