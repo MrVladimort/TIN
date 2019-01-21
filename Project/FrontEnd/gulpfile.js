@@ -4,14 +4,14 @@ const minifyCSS = require('gulp-clean-css');
 const concat = require('gulp-concat');
 
 const SCSS_SRC = './src/assets/scss/**/*.scss';
-const SCSS_DEST = './src/assets/css';
+const CSS_DEST = './src/assets/css';
 
 gulp.task('compile_scss', function() {
     gulp.src(SCSS_SRC)
         .pipe(sass().on('error', sass.logError))
         .pipe(minifyCSS())
         .pipe(concat('default.min.css'))
-        .pipe(gulp.dest(SCSS_DEST));
+        .pipe(gulp.dest(CSS_DEST));
 });
 
 gulp.task('watch_scss', function () {

@@ -2,11 +2,11 @@
   "compileOnSave": true,
   "compilerOptions": {
     "lib": [
-      "es2018"
+      "esnext"
     ],
     "alwaysStrict": true,
     "module": "commonjs",
-    "target": "es2018",
+    "target": "esnext",
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,

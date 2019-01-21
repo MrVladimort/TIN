@@ -1,4 +1,5 @@
 import bodyParser from "body-parser";
+import cors from "cors";
 import express from "express";
 import mongoose from "mongoose";
 
@@ -20,6 +21,7 @@ declare global {
 
 const app = express();
 
+app.use(cors());
 app.use(morganLogger);
 
 app.use(bodyParser.json());
@@ -33,12 +35,13 @@ app.use(errorHandler);
 async function connectToDb() {
     mongoose.set("debug", true);
     await mongoose.connect(serverConfig.dbURI, serverConfig.dbOptions);
+    winstonLogger.info(`Database connected on ${serverConfig.dbURI}`);
 }
 
 async function main() {
     await app.listen(serverConfig.port);
     await connectToDb();
-    winstonLogger.info("Server ready");
+    winstonLogger.info(`Server ready and listening on port ${serverConfig.port}`);
 }
 
 main().catch(winstonLogger.error);

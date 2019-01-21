@@ -1,34 +1,58 @@
 {
-  "name": "tin-front",
-  "version": "0.0.1",
+  "name": "my-app",
+  "version": "0.1.0",
   "private": true,
   "dependencies": {
     "axios": "^0.18.0",
     "history": "^4.7.2",
     "lodash": "^4.17.11",
-    "moment": "^2.22.2",
+    "moment": "^2.23.0",
     "prop-types": "^15.6.2",
-    "react": "^16.6.3",
-    "react-dom": "^16.6.3",
+    "react": "^16.7.0",
+    "react-dom": "^16.7.0",
     "react-redux": "^6.0.0",
     "react-router-dom": "^4.3.1",
-    "react-scripts": "^2.1.1",
+    "react-scripts": "^2.1.3",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0",
-    "validator": "^10.9.0"
-  },
-  "scripts": {
-    "start": "react-scripts start ",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "validator": "^10.11.0"
   },
   "devDependencies": {
+    "typescript": "^3.2.4",
+    "@types/jest": "^23.3.13",
+    "@types/node": "^10.12.18",
+    "@types/react": "^16.7.20",
+    "@types/react-dom": "^16.0.11",
+    "@types/react-router-dom": "^4.3.1",
+    "@types/lodash": "^4.14.120",
+    "@types/react-redux": "^7.0.0",
+    "@types/redux": "^3.6.0",
+    "@types/redux-thunk": "^2.1.0",
+    "@types/validator": "^10.9.0",
+    "@types/prop-types": "^15.5.8",
+    "@types/moment": "^2.13.0",
+    "@types/history": "^4.7.2",
+    "@types/axios": "^0.14.0",
+    "redux-devtools-extension": "^2.13.7",
     "gulp": "^3.9.1",
+    "gulp-sass": "^4.0.2",
     "gulp-clean-css": "^4.0.0",
     "gulp-concat": "^2.6.1",
-    "gulp-sass": "^4.0.2",
-    "prettier": "^1.15.3",
-    "redux-devtools-extension": "^2.13.7"
-  }
+    "@types/redux-devtools-extension": "^2.13.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }

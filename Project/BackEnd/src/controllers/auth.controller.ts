@@ -19,7 +19,7 @@ export async function withEmailAndPass(req: Request, res: Response, next: NextFu
     } else { throw new HttpError(404, "User not found"); }
 }
 
-export async function withEmailAndToken(req: Request, res: Response, next: NextFunction) {
+export async function withEmailAndRefreshToken(req: Request, res: Response, next: NextFunction) {
     const {email, refreshToken} = req.body;
 
     if (!refreshTokens.delete(refreshToken)) { throw new HttpError(401, "Bad email or token"); }
@@ -34,4 +34,16 @@ export async function withEmailAndToken(req: Request, res: Response, next: NextF
             res.json({user, tokens, success: true, status: 200});
         } else { throw new HttpError(401, "Bad email or token"); }
     } else { throw new HttpError(404, "User not found"); }
+}
+
+export async function withAccessToken(req: Request, res: Response, next: NextFunction) {
+    const {accessToken} = req.body;
+
+    const token = accessToken.replace("Bearer ", ""); // jwt = req.header.Authorization
+    const user = await UserModel.findOneWithAccessToken(token);
+
+    if (!user) return next(new HttpError(404, "User not found"));
+
+    const tokens = user.generateJWT();
+    res.json({user, tokens, success: true, status: 200});
 }

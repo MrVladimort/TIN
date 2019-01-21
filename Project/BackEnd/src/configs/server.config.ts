@@ -19,8 +19,8 @@ export interface IServerConfig {
 }
 
 const config: IServerConfig = {
-    serverUrl: "localhost:3000",
-    port: 3000,
+    serverUrl: "localhost:8080",
+    port: 8080,
     dbURI: "mongodb://admin:admin123@ds127094.mlab.com:27094/tin_pro",
     dbOptions: {
         useNewUrlParser: true,
