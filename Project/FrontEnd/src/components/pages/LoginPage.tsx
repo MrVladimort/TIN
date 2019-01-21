@@ -41,16 +41,15 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
 
     login = (emailAndPass: ILoginFormData) => this.props.loginEmailAndPass(emailAndPass).then(() => this.props.history.push("/user"));
 
-    onLoginSubmit = (event: React.FormEvent) => {
+    onLoginSubmit = async (event: React.FormEvent) => {
         event.preventDefault();
         const {formData} = this.state;
 
-        this.login({email: formData.email.toLowerCase(), pass: formData.pass});
+        await this.login({email: formData.email.toLowerCase(), pass: formData.pass});
     };
 
     handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
         const {name, value} = event.target;
-
         this.setState({formData: {...this.state.formData, [name]: value}});
     };
 
@@ -61,10 +60,10 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
             <div className="flexWrapper">
                 <div className="formContainer" style={{margin: "auto"}}>
                     <form className="form" onSubmit={this.onLoginSubmit}>
-                        <Input name={"login-email"} placeholder={"Login here"} required label={"Email"}
+                        <Input name={"email"} placeholder={"Login here"} required label={"Email"}
                                onChange={this.handleChange}/>
-                        <Input name={"login-pass"} placeholder={"Password here"} required label={"Password"}
-                               onChange={this.handleChange}/>
+                        <Input name={"pass"} placeholder={"Password here"} required label={"Password"}
+                               onChange={this.handleChange} type={"password"}/>
                         <Button text="Log In" type="submit" disabled={loading}/>
                     </form>
                 </div>
@@ -74,7 +73,15 @@ class LoginPage extends React.Component<ILoginPageProps, ILoginPageState> {
 }
 
 const mapStateToProps = (state: any) => ({});
-
-export default connect(mapStateToProps, {
+const mapDispatchToProps = {
     loginEmailAndPass: authActions.loginEmailAndPass
-})(LoginPage);
+};
+
+LoginPage.propTypes = {
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired
+    }).isRequired,
+    loginEmailAndPass: PropTypes.func.isRequired,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginPage);

@@ -11,11 +11,10 @@ interface IHeaderState {
 interface IHeaderProps {
     isAuth: boolean,
     user: {
-        firstName: string,
-        lastName: string
+        name: string,
+        surname: string
     },
 
-    dispatch: Function,
     history: {
         push: Function
     },
@@ -25,27 +24,20 @@ interface IHeaderProps {
 class Header extends Component<IHeaderProps, IHeaderState> {
     static propTypes: any;
 
-    clickLogout = () => {
-        const {logout, history} = this.props;
-        logout();
-        history.push('/');
-    };
-
     getRightSide = () => {
         const {isAuth, user} = this.props;
         if (isAuth) return (
             <div className="right">
-                <Link to={"/user"}>Hello, ${user.firstName + " " + user.lastName}</Link>
-                <Link onClick={this.clickLogout} to={"/logout"}>Log Out</Link>
+                <Link to={"/user"}>Hello, {user.name + " " + user.surname}</Link>
+                <Link to={"/logout"}>Log Out</Link>
             </div>
         );
-        else
-            return (
-                <div className="right">
-                    <Link to={"/login"}>Log In</Link>
-                    <Link to={"/register"}>Register</Link>
-                </div>
-            );
+        else return (
+            <div className="right">
+                <Link to={"/login"}>Log In</Link>
+                <Link to={"/register"}>Register</Link>
+            </div>
+        );
     };
 
     render() {
@@ -70,7 +62,6 @@ Header.propTypes = {
     }).isRequired,
 
     isAuth: PropTypes.bool.isRequired,
-    logout: PropTypes.func.isRequired,
     user: PropTypes.shape({
         firstName: PropTypes.string,
         lastName: PropTypes.string
@@ -79,11 +70,23 @@ Header.propTypes = {
 
 const mapStateToProps = (state: any) => ({
     user: state.user,
-    isAuth: !!state.auth.token,
+    isAuth: !!state.auth.tokens,
 });
 
-const mapDispatchToProps = () => ({
+const mapDispatchToProps = {
     logout: authActions.logout
-});
+};
+
+Header.propTypes = {
+    history: PropTypes.shape({
+        push: PropTypes.func.isRequired
+    }).isRequired,
+    isAuth: PropTypes.bool.isRequired,
+    user: PropTypes.shape({
+        name: PropTypes.string,
+        surname: PropTypes.string
+    }),
+    logout: PropTypes.func.isRequired
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

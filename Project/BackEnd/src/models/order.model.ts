@@ -1,17 +1,29 @@
-import {ModelType, prop, staticMethod, Typegoose} from "typegoose";
+import {instanceMethod, InstanceType, ModelType, prop, Ref, staticMethod, Typegoose} from "typegoose";
+import {User} from "./user.model";
 
-class Order extends Typegoose {
-
+export class Order extends Typegoose {
     @staticMethod
-    public static async findOneByClientId(this: ModelType<Order> & typeof Order, clientId: string) {
-        return await this.findOne({clientId});
+    public static async findAllByUserId(this: ModelType<Order> & typeof Order, userId: string) {
+        return await this.find({
+            userId,
+        });
     }
-    @prop()
-    public adminId: string;
-    @prop()
-    public clientId: string;
-    @prop()
-    public name: string;
+
+    @prop({required: true}) public userId: Ref<User>;
 }
 
-export default new Order().getModelForClass(Order);
+const Options = {
+    schemaOptions: {
+        toJSON: {
+            transform: (doc: InstanceType<Order>, ret: InstanceType<Order>, options: any) => {
+                delete ret._id;
+                return ret;
+            },
+            versionKey: false,
+            virtuals: true,
+        },
+        timestamps: true,
+    },
+};
+
+export default new Order().getModelForClass(Order, Options);

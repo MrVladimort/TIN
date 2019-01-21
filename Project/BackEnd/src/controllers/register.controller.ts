@@ -32,7 +32,8 @@ export async function confirmEmail(req: Request, res: Response, next: NextFuncti
         user.verified = true;
         await user.save();
 
-        res.json({success: true, status: 200});
+        const tokens = user.generateJWT();
+        res.json({user, tokens, success: true, status: 200});
     } else {
         throw new HttpError(404, "User not found");
     }

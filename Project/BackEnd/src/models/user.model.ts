@@ -129,23 +129,12 @@ export class User extends Typegoose {
         return this.findOneByEmail(email, verified);
     }
 
-    @prop({required: true})
-    public name?: string;
-
-    @prop({required: true})
-    public surname?: string;
-
-    @prop({required: true, unique: true})
-    public email: string;
-
-    @prop()
-    public passHash: string;
-
-    @prop()
-    public passSalt: string;
-
-    @prop({default: false})
-    public verified: boolean;
+    @prop({required: true}) public name?: string;
+    @prop({required: true}) public surname?: string;
+    @prop({required: true, unique: true}) public email: string;
+    @prop() public passHash: string;
+    @prop() public passSalt: string;
+    @prop({default: false}) public verified: boolean;
 
     @instanceMethod
     public hashAndSetPass(this: InstanceType<User>, pass: string): void {
@@ -180,7 +169,7 @@ export class User extends Typegoose {
     }
 }
 
-const DefaultTransform = {
+const Options = {
     schemaOptions: {
         toJSON: {
             transform: (doc: InstanceType<User>, ret: InstanceType<User>, options: any) => {
@@ -193,7 +182,8 @@ const DefaultTransform = {
             versionKey: false,
             virtuals: true,
         },
+        timestamps: true,
     },
 };
 
-export default new User().getModelForClass(User, DefaultTransform);
+export default new User().getModelForClass(User, Options);

@@ -31,9 +31,8 @@ export default {
         (emailAndPass: any) => (dispatch: Dispatch) => authApi.loginEmail(emailAndPass)
             .then(loginData => loginAction(loginData, dispatch)),
 
-    loginAccessToken:
-        (accessToken: string) => (dispatch: Dispatch) => authApi.loginAccessToken(accessToken)
-            .then(loginData => loginAction(loginData, dispatch)),
+    loginAccessToken: (accessToken: string, dispatch: Dispatch) => authApi.loginAccessToken(accessToken)
+        .then(loginData => loginAction(loginData, dispatch)),
 
     loginRefreshTokenAndEmail:
         (emailAndrefreshToken: string) => (dispatch: Dispatch) => authApi.loginRefreshTokenAndEmail(emailAndrefreshToken)

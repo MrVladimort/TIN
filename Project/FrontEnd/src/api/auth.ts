@@ -3,7 +3,7 @@ import mainConfig from "../config";
 
 export default {
     loginEmail: (credentials: any) => axios.post(`${mainConfig.apiHost}/auth/email`, credentials).then(res => res.data),
-    loginAccessToken: (token: string) => axios.post(`${mainConfig.apiHost}/auth/token`, {token}).then(res => res.data),
+    loginAccessToken: (accessToken: string) => axios.post(`${mainConfig.apiHost}/auth/token`, {accessToken}).then(res => res.data),
     loginRefreshTokenAndEmail: (tokenAndEmail: any) => axios.post(`${mainConfig.apiHost}/auth/refresh-token`, tokenAndEmail)
         .then(res => res.data),
 

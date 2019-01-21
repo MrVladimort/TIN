@@ -10,7 +10,6 @@ import {composeWithDevTools} from "redux-devtools-extension";
 import rootReducer from './redux/rootReducer';
 
 import setAuthorizationHeader from "./utils/setAuthorizationHeader";
-import authApi from "./api/auth";
 import authActions from "./redux/actions/auth";
 
 const store = createStore(
@@ -22,7 +21,8 @@ async function init() {
         const token = localStorage.getItem('TIN_ticket');
         if (token) {
             setAuthorizationHeader(token);
-            authActions.loginAccessToken(token);
+            console.log(token);
+            await authActions.loginAccessToken(token, store.dispatch);
         }
     } catch (err) {
         console.log(err);

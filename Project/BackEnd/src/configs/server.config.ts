@@ -1,5 +1,6 @@
 export interface IServerConfig {
     serverUrl: string;
+    clientUrl: string;
     port: number;
     dbURI: string;
     dbOptions: {
@@ -19,7 +20,8 @@ export interface IServerConfig {
 }
 
 const config: IServerConfig = {
-    serverUrl: "localhost:8080",
+    serverUrl: "http://localhost:8080/api",
+    clientUrl: "http://localhost:3000",
     port: 8080,
     dbURI: "mongodb://admin:admin123@ds127094.mlab.com:27094/tin_pro",
     dbOptions: {

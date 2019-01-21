@@ -4,6 +4,8 @@ import {connect} from "react-redux";
 import PropTypes from "prop-types";
 import './assets/css/default.min.css';
 
+import PrivateRoute from "./components/utilComponents/PrivateRoute";
+
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
@@ -11,6 +13,11 @@ import HomePage from "./components/pages/HomePage";
 import LoginPage from "./components/pages/LoginPage";
 import RegisterPage from "./components/pages/RegisterPage";
 import UserPage from "./components/pages/UserPage";
+import LogoutPage from "./components/pages/LogoutPage";
+import ConfirmEmailPage from "./components/pages/ConfirmEmailPage";
+import ZamowieniePage from "./components/pages/ZamowieniePage";
+import WydarzeniaPage from "./components/pages/WydarzeniaPage";
+import OdtworcyPage from "./components/pages/OdtworcyPage";
 
 const App = ({ location, dispatch, history}: any) => (
     <div className="reactBody">
@@ -19,7 +26,13 @@ const App = ({ location, dispatch, history}: any) => (
             <Route path="/" exact component={HomePage}/>
             <Route path="/login" exact component={LoginPage}/>
             <Route path="/register" exact component={RegisterPage}/>
-            <Route path="/user" exact component={UserPage}/>
+            <Route path="/confirm-email" component={ConfirmEmailPage}/>
+            <Route path="/zamowienie" component={ZamowieniePage}/>
+            <Route path="/wydarzenia" component={WydarzeniaPage}/>
+            <Route path="/odtworcy" component={OdtworcyPage}/>
+
+            <PrivateRoute path="/user" exact component={UserPage}/>
+            <PrivateRoute path="/logout" exact component={LogoutPage}/>
         </div>
         <Footer/>
     </div>

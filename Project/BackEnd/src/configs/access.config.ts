@@ -1,5 +1,6 @@
 export interface IAccessConfig {
     mailer: {
+        from: string,
         service: string,
         auth: {
             pass: string,
@@ -10,6 +11,7 @@ export interface IAccessConfig {
 
 const config: IAccessConfig = {
     mailer: {
+        from: "tin_pro@pjwstk.edu.pl",
         auth: {
             pass: "vhp1234567890",
             user: "vladyslav.hravchenko.tester@gmail.com",
