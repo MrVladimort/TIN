@@ -99,8 +99,9 @@ export default User;
 */
 
 import crypto from "crypto";
-import {instanceMethod, InstanceType, ModelType, prop, staticMethod, Typegoose} from "typegoose";
+import {instanceMethod, InstanceType, ModelType, plugin, prop, staticMethod, Typegoose} from "typegoose";
 import {createAccessToken, createRefreshToken, verifyAccessToken, verifyRefreshToken} from "../services/jwt.service";
+import {AutoIncrement} from "./index";
 
 const hashPassWithSalt = (pass: string, salt: string): string => crypto.pbkdf2Sync(pass, salt, 64, 128, "sha512").toString("base64");
 const generateSalt = (): string => crypto.randomBytes(8).toString("hex");
@@ -110,6 +111,7 @@ export interface IAuthTokens {
     refreshToken?: string;
 }
 
+@plugin(AutoIncrement, {inc_field: "userId"})
 export class User extends Typegoose {
 
     @prop()
@@ -129,8 +131,11 @@ export class User extends Typegoose {
         return this.findOneByEmail(email, verified);
     }
 
-    @prop({required: true}) public name?: string;
-    @prop({required: true}) public surname?: string;
+    public id: any;
+
+    @prop({unique: true}) public userId: number;
+    @prop({required: true}) public name: string;
+    @prop({required: true}) public surname: string;
     @prop({required: true, unique: true}) public email: string;
     @prop() public passHash: string;
     @prop() public passSalt: string;

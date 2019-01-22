@@ -25,6 +25,7 @@
     "xregexp": "^4.2.0",
     "moment": "^2.22.2",
     "mongoose": "^5.3.14",
+    "mongoose-sequence": "^4.0.1",
     "typegoose": "^5.4.1",
     "figures": "^2.0.0",
     "colors": "^1.3.2",

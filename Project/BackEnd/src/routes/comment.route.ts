@@ -1,8 +1,11 @@
 import Router from "express-promise-router";
-import {getComment} from "../controllers/comment.controller";
+import {createComment, deleteComment, getAllComments, getComment} from "../controllers/comment.controller";
 
 const router = Router();
 
-router.get("/", getComment);
+router.get("/:id", getComment);
+router.get("/", getAllComments);
+router.post("/", createComment);
+router.delete("/:id", deleteComment);
 
 export default router;

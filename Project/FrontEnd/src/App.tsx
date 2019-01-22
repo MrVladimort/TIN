@@ -15,9 +15,9 @@ import RegisterPage from "./components/pages/RegisterPage";
 import UserPage from "./components/pages/UserPage";
 import LogoutPage from "./components/pages/LogoutPage";
 import ConfirmEmailPage from "./components/pages/ConfirmEmailPage";
-import ZamowieniePage from "./components/pages/ZamowieniePage";
-import WydarzeniaPage from "./components/pages/WydarzeniaPage";
-import OdtworcyPage from "./components/pages/OdtworcyPage";
+import OrderPage from "./components/pages/OrderPage";
+import EventPage from "./components/pages/EventPage";
+import ArtistPage from "./components/pages/ArtistPage";
 
 const App = ({ location, dispatch, history}: any) => (
     <div className="reactBody">
@@ -27,9 +27,9 @@ const App = ({ location, dispatch, history}: any) => (
             <Route path="/login" exact component={LoginPage}/>
             <Route path="/register" exact component={RegisterPage}/>
             <Route path="/confirm-email" component={ConfirmEmailPage}/>
-            <Route path="/zamowienie" component={ZamowieniePage}/>
-            <Route path="/wydarzenia" component={WydarzeniaPage}/>
-            <Route path="/odtworcy" component={OdtworcyPage}/>
+            <Route path="/order" component={OrderPage}/>
+            <Route path="/event" component={EventPage}/>
+            <Route path="/artist" component={ArtistPage}/>
 
             <PrivateRoute path="/user" exact component={UserPage}/>
             <PrivateRoute path="/logout" exact component={LogoutPage}/>

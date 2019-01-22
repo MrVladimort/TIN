@@ -1,13 +1,13 @@
 import bodyParser from "body-parser";
 import cors from "cors";
 import express from "express";
-import mongoose from "mongoose";
 
 import serverConfig from "./configs/server.config";
-import { errorHandler, notFound } from "./middlewares/basic.middleware";
-import { User } from "./models/user.model";
+import {errorHandler, notFound} from "./middlewares/basic.middleware";
+import {connectToDb} from "./models";
+import {User} from "./models/user.model";
 import routes from "./routes";
-import { morganLogger, winstonLogger } from "./services/logger.service";
+import {morganLogger, winstonLogger} from "./services/logger.service";
 
 winstonLogger.info(`Process: ${process.cwd()}`);
 
@@ -25,18 +25,12 @@ app.use(cors());
 app.use(morganLogger);
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 
 routes(app);
 
 app.use(notFound);
 app.use(errorHandler);
-
-async function connectToDb() {
-    mongoose.set("debug", true);
-    await mongoose.connect(serverConfig.dbURI, serverConfig.dbOptions);
-    winstonLogger.info(`Database connected on ${serverConfig.dbURI}`);
-}
 
 async function main() {
     await app.listen(serverConfig.port);

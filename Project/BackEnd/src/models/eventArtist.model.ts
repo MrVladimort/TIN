@@ -1,4 +1,4 @@
-import {instanceMethod, InstanceType, ModelType, prop, Ref, staticMethod, Typegoose} from "typegoose";
+import {InstanceType, ModelType, prop, Ref, staticMethod, Typegoose} from "typegoose";
 import {Artist} from "./artist.model";
 import {Event} from "./event.model";
 

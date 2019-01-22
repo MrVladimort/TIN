@@ -1,7 +1,9 @@
-import {InstanceType, ModelType, prop, Ref, staticMethod, Typegoose} from "typegoose";
+import {InstanceType, ModelType, plugin, prop, Ref, staticMethod, Typegoose} from "typegoose";
 import {Event} from "./event.model";
+import {AutoIncrement} from "./index";
 import {User} from "./user.model";
 
+@plugin(AutoIncrement, {inc_field: "commentId"})
 export class Comment extends Typegoose {
     @staticMethod
     public static async findAllByEventId(this: ModelType<Comment> & typeof Comment, eventId: string) {
@@ -17,6 +19,7 @@ export class Comment extends Typegoose {
         });
     }
 
+    @prop({unique: true}) public commentId: number;
     @prop({required: true, ref: User}) public userId: Ref<User>;
     @prop({required: true, ref: Event}) public eventId: Ref<Event>;
     @prop({required: true}) public text: string;

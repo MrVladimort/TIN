@@ -1,8 +1,10 @@
 import Router from "express-promise-router";
-import {getTicket} from "../controllers/ticket.controller";
+import {deleteTicket, getAllTickets, getTicket} from "../controllers/ticket.controller";
 
 const router = Router();
 
-router.get("/", getTicket);
+router.get("/:id", getTicket);
+router.get("/", getAllTickets);
+router.delete("/:id", deleteTicket);
 
 export default router;

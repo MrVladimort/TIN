@@ -2,7 +2,7 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
 
-class WydarzeniaPage extends React.Component {
+class EventPage extends React.Component {
     static propTypes = {};
 
     render() {
@@ -16,4 +16,4 @@ class WydarzeniaPage extends React.Component {
 
 const mapStateToProps = (state: any) => ({});
 
-export default connect(mapStateToProps)(WydarzeniaPage);
+export default connect(mapStateToProps)(EventPage);

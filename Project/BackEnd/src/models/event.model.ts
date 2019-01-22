@@ -1,5 +1,7 @@
-import {InstanceType, ModelType, prop, staticMethod, Typegoose} from "typegoose";
+import {InstanceType, ModelType, plugin, prop, staticMethod, Typegoose} from "typegoose";
+import {AutoIncrement} from "./index";
 
+@plugin(AutoIncrement, {inc_field: "eventId"})
 export class Event extends Typegoose {
     @staticMethod
     public static async findAllByDate(this: ModelType<Event> & typeof Event, date: Date) {
@@ -22,11 +24,12 @@ export class Event extends Typegoose {
         });
     }
 
+    @prop({unique: true}) public eventId: number;
     @prop({required: true}) public location: string;
     @prop({required: true, unique: true}) public name: string;
     @prop({required: true}) public date: Date;
     @prop({required: true}) public freePlacesCount: number;
-    @prop({required: true}) public bookedPlacesCount: number;
+    @prop({default: 0}) public bookedPlacesCount?: number;
 
     @prop()
     get placesCount(this: InstanceType<Event>) {

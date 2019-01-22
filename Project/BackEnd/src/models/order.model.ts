@@ -1,6 +1,13 @@
-import {instanceMethod, InstanceType, ModelType, prop, Ref, staticMethod, Typegoose} from "typegoose";
+import {InstanceType, ModelType, plugin, prop, Ref, staticMethod, Typegoose} from "typegoose";
+import {AutoIncrement} from "./index";
 import {User} from "./user.model";
 
+enum Status {
+    FUTURE = "future",
+    PAST = "past",
+}
+
+@plugin(AutoIncrement, {inc_field: "orderId"})
 export class Order extends Typegoose {
     @staticMethod
     public static async findAllByUserId(this: ModelType<Order> & typeof Order, userId: string) {
@@ -9,7 +16,9 @@ export class Order extends Typegoose {
         });
     }
 
+    @prop({unique: true}) public orderId: number;
     @prop({required: true}) public userId: Ref<User>;
+    @prop({default: "future", enum: Status}) public status: string;
 }
 
 const Options = {

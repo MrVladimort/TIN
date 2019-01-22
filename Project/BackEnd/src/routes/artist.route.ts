@@ -1,8 +1,11 @@
 import Router from "express-promise-router";
-import {getArtist} from "../controllers/artist.controller";
+import {createArtist, deleteArtist, getAllArtists, getArtist} from "../controllers/artist.controller";
 
 const router = Router();
 
-router.get("/", getArtist);
+router.get("/:id", getArtist);
+router.get("/", getAllArtists);
+router.post("/", createArtist);
+router.delete("/:id", deleteArtist);
 
 export default router;
