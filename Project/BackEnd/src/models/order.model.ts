@@ -10,14 +10,14 @@ enum Status {
 @plugin(AutoIncrement, {inc_field: "orderId"})
 export class Order extends Typegoose {
     @staticMethod
-    public static async findAllByUserId(this: ModelType<Order> & typeof Order, userId: string) {
+    public static async findAllByUser(this: ModelType<Order> & typeof Order, User: string) {
         return await this.find({
-            userId,
+            User,
         });
     }
 
     @prop({unique: true}) public orderId: number;
-    @prop({required: true}) public userId: Ref<User>;
+    @prop({required: true}) public User: Ref<User>;
     @prop({default: "future", enum: Status}) public status: string;
 }
 

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
+import {Link} from "react-router-dom";
 
 interface IButtonState {
 
@@ -22,7 +23,10 @@ class Button extends React.Component<IButtonProps, IButtonState> {
 
         return (
             <div>
-                <button className="button" type={type}>{text}</button>
+                <button className="button" type={type}>
+                    {text}
+                    {this.props.children}
+                </button>
             </div>
         )
     }

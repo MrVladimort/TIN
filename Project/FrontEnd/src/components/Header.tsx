@@ -45,8 +45,8 @@ class Header extends Component<IHeaderProps, IHeaderState> {
             <div className="header">
                 <div className="left">
                     <Link to={"/"}>Home</Link>
-                    <Link to={"/wydarzenia"}>Wydarzenia</Link>
-                    <Link to={"/odtworcy"}>Odtworcy</Link>
+                    <Link to={"/event"}>Events</Link>
+                    <Link to={"/artist"}>Artist</Link>
                     <Link to={"/info"}>Info</Link>
                 </div>
 

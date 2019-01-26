@@ -7,13 +7,13 @@ import EventArtistModel from "../models/eventArtist.model";
 
 export async function getEvent(req: Request, res: Response, next: NextFunction) {
     const eventId = req.params.id;
-    const event = await EventModel.findOne({eventId});
-    res.json({event, success: true, status: 200});
+    const eventData = await EventArtistModel.findAllByEventId(eventId);
+    res.json({eventData, success: true, status: 200});
 }
 
 export async function getAllEvents(req: Request, res: Response, next: NextFunction) {
-    const events = await EventModel.find();
-    res.json({events, success: true, status: 200});
+    const eventsData = await EventArtistModel.findAll();
+    res.json({eventsData, success: true, status: 200});
 }
 
 export async function createEvent(req: Request, res: Response, next: NextFunction) {
@@ -30,8 +30,10 @@ export async function createEvent(req: Request, res: Response, next: NextFunctio
         const artist = await ArtistModel.findOne({artistId: id});
 
         const eventArtist = new EventArtistModel({
-            eventId: event.id,
-            artistId: artist.id,
+            Event: event.id,
+            Artist: artist.id,
+            eventId: event.eventId,
+            artistId: id,
         });
 
         return await eventArtist.save();

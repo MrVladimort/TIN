@@ -2,23 +2,68 @@ import {InstanceType, ModelType, prop, Ref, staticMethod, Typegoose} from "typeg
 import {Artist} from "./artist.model";
 import {Event} from "./event.model";
 
+interface IEventData {
+    event: Event;
+    artists: Artist[];
+}
+
 export class EventArtist extends Typegoose {
     @staticMethod
-    public static async findAllByEventId(this: ModelType<EventArtist> & typeof EventArtist, eventId: string) {
-        return await this.find({
+    public static async findAllByEventId(this: ModelType<EventArtist> & typeof EventArtist, eventId: number) {
+        const eventAndArtist = await this.find({
             eventId,
+        }).populate("Event").populate("Artist");
+
+        return eventAndArtist.reduce((accum, cur) => {
+            if (!accum.event) {
+                accum.event = cur.Event;
+            }
+            accum.artists.push(cur.Artist);
+            return accum;
+        }, {
+            event: null,
+            artists: [],
         });
     }
 
     @staticMethod
-    public static async findAllByArtistId(this: ModelType<EventArtist> & typeof EventArtist, artistId: string) {
+    public static async findAll(this: ModelType<EventArtist> & typeof EventArtist) {
+        const eventAndArtist = await this.find().populate("Event").populate("Artist");
+
+        return eventAndArtist.reduce((accum, cur) => {
+            const index = accum.findIndex((eventData: IEventData) => eventData.event.eventId === cur.Event.eventId);
+
+            if (index === -1) {
+                accum.push({
+                    event: cur.Event,
+                    artists: [cur.Artist],
+                });
+            } else {
+                accum[index].artists.push(cur.Artist);
+            }
+
+            return accum;
+        }, []);
+    }
+
+    @staticMethod
+    public static async findAllByEvent(this: ModelType<EventArtist> & typeof EventArtist, Event: string) {
         return await this.find({
-            artistId,
+            Event,
         });
     }
 
-    @prop({required: true}) public eventId: Ref<Event>;
-    @prop({required: true}) public artistId: Ref<Artist>;
+    @staticMethod
+    public static async findAllByArtist(this: ModelType<EventArtist> & typeof EventArtist, Artist: string) {
+        return await this.find({
+            Artist,
+        });
+    }
+
+    @prop({required: true, ref: Event}) public Event: Ref<Event>;
+    @prop({required: true}) public eventId: number;
+    @prop({required: true, ref: Artist}) public Artist: Ref<Artist>;
+    @prop({required: true}) public artistId: number;
 }
 
 const Options = {

@@ -6,22 +6,34 @@ import {User} from "./user.model";
 @plugin(AutoIncrement, {inc_field: "commentId"})
 export class Comment extends Typegoose {
     @staticMethod
-    public static async findAllByEventId(this: ModelType<Comment> & typeof Comment, eventId: string) {
-        return await this.find({
-            eventId,
-        });
+    public static async findAll(this: ModelType<Comment> & typeof Comment) {
+        return await this.find().populate("User").populate("Event");
     }
 
     @staticMethod
-    public static async findAllByUser(this: ModelType<Comment> & typeof Comment, userId: string) {
+    public static async findOneByCommentId(this: ModelType<Comment> & typeof Comment, commentId: number) {
+        return await this.findOne({
+            commentId,
+        }).populate("User").populate("Event");
+    }
+
+    @staticMethod
+    public static async findAllByEvent(this: ModelType<Comment> & typeof Comment, Event: string) {
         return await this.find({
-            userId,
-        });
+            Event,
+        }).populate("User").populate("Event");
+    }
+
+    @staticMethod
+    public static async findAllByUser(this: ModelType<Comment> & typeof Comment, User: string) {
+        return await this.find({
+            User,
+        }).populate("User").populate("Event");
     }
 
     @prop({unique: true}) public commentId: number;
-    @prop({required: true, ref: User}) public userId: Ref<User>;
-    @prop({required: true, ref: Event}) public eventId: Ref<Event>;
+    @prop({required: true, ref: User}) public User: Ref<User>;
+    @prop({required: true, ref: Event}) public Event: Ref<Event>;
     @prop({required: true}) public text: string;
     @prop({required: true}) public grade: number;
 }

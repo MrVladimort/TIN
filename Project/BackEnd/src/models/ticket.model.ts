@@ -13,27 +13,27 @@ export class Ticket extends Typegoose {
     }
 
     @staticMethod
-    public static async findAllByUserId(this: ModelType<Ticket> & typeof Ticket, userId: string) {
+    public static async findAllByOrder(this: ModelType<Ticket> & typeof Ticket, Order: string) {
         return await this.find({
-            userId,
+            Order,
         });
     }
 
     @staticMethod
-    public static async findAllByEventId(this: ModelType<Ticket> & typeof Ticket, eventId: string) {
+    public static async findAllByEvent(this: ModelType<Ticket> & typeof Ticket, Event: string) {
         return await this.find({
-            eventId,
+            Event,
         });
     }
 
     @prop({unique: true}) public ticketId: number;
     @prop({required: true}) public number: number;
     @prop({required: true}) public price: number;
-    @prop({required: true}) public name: number;
-    @prop({required: true}) public surname: number;
+    @prop({required: true}) public name: string;
+    @prop({required: true}) public surname: string;
 
-    @prop({required: true, ref: Event}) public eventId: Ref<Event>;
-    @prop({required: true, ref: Order}) public orderId: Ref<Order>;
+    @prop({required: true, ref: Event}) public Event: Ref<Event>;
+    @prop({required: true, ref: Order}) public Order: Ref<Order>;
 }
 
 const Options = {

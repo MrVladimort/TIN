@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "node ./build/App.js",
-    "development": "nodemon ./build//app.js"
+    "development": "nodemon ./build/App.js"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
