@@ -36,19 +36,19 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
         const {events, comments} = this.state;
         return (
             <div className="container flexWrapper" style={{margin: "auto"}}>
-                <div className="eventsContainer">
+                <div className="eventsContainer" style={{flexDirection: "column"}}>
                     <h1 className="event">Events</h1>
 
                     {events.length !== 0
-                        ? events.map(eventData => <Event event={eventData.event} artists={eventData.artists} key={`event:${eventData.event.eventId}`}/>)
+                        ? events.map(eventData => <Event event={eventData.event} artists={eventData.artists} key={`event: ${eventData.event.eventId}`}/>)
                         : <h1>Loading</h1>}
                 </div>
 
-                <div className="commentsContainer">
+                <div className="commentsContainer" style={{flexDirection: "column"}}>
                     <h1 className="comment">Comments</h1>
 
                     {comments.length !== 0
-                        ? comments.map(commentData => <Comment key={`comment:${commentData.commentId}`} comment={commentData}/>)
+                        ? comments.map(commentData => <Comment key={`comment: ${commentData.commentId}`} comment={commentData}/>)
                         : <h1>Loading</h1>}
                 </div>
             </div>

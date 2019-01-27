@@ -11,7 +11,9 @@ export async function getOrder(req: Request, res: Response, next: NextFunction) 
 
     if (order) {
         const tickets = await TicketModel.find({Order: order.id});
-        res.json({order: {...order.toJSON(), tickets}, success: true, status: 200});
+        const event = await EventModel.findById(tickets[0].Event);
+
+        res.json({order: {...order.toJSON(), event, tickets}, success: true, status: 200});
     } else {
         throw new HttpError(404, "Order not found");
     }
@@ -22,7 +24,9 @@ export async function getAllOrders(req: Request, res: Response, next: NextFuncti
 
     const orderWithTickets = await Promise.all(orders.map(async (order) => {
         const tickets = await TicketModel.find({Order: order.id});
-        return {...order.toJSON(), tickets};
+        const event = await EventModel.findById(tickets[0].Event);
+
+        return {...order.toJSON(), event, tickets};
     }));
 
     res.json({orders: orderWithTickets, success: true, status: 200});

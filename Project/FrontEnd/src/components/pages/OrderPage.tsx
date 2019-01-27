@@ -70,7 +70,6 @@ class OrderPage extends React.Component<IOrderPageProps, IOrderPageState> {
 
     render() {
         const {tickets, eventData} = this.state;
-
         return (
             eventData ?
                 <div className="formContainer" style={{margin: "auto"}}>
@@ -95,7 +94,7 @@ class OrderPage extends React.Component<IOrderPageProps, IOrderPageState> {
                     {tickets.map((ticket, index) => <h3
                         key={`ticket ${index}`}>{`Ticket ${index + 1}: ${ticket.name} ${ticket.surname}`}</h3>)}
                     <form onSubmit={this.onOrderSubmit}>
-                        <Button text="Make order" type="submit" />
+                        {tickets.length !== 0 ? <Button text="Make order" type="submit"/> : <div/>}
                     </form>
                 </div> : <h1>Loading</h1>
         )

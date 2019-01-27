@@ -13,7 +13,7 @@ class Artist extends Component<IArtistProps> {
     render() {
         const {artist} = this.props;
         return (
-            <div className="artists">
+            <div className="artist" style={{flexDirection: "column"}}>
                 <h3>Artist: {artist.name}</h3>
                 <h4>Style: {artist.style}</h4>
             </div>

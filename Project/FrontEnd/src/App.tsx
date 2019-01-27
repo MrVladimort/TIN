@@ -18,6 +18,7 @@ import ConfirmEmailPage from "./components/pages/ConfirmEmailPage";
 import OrderPage from "./components/pages/OrderPage";
 import EventPage from "./components/pages/EventPage";
 import ArtistPage from "./components/pages/ArtistPage";
+import EventExactPage from "./components/pages/EventExactPage";
 
 const App = ({ location, dispatch, history}: any) => (
     <div className="reactBody">
@@ -27,10 +28,11 @@ const App = ({ location, dispatch, history}: any) => (
             <Route path="/login" exact component={LoginPage}/>
             <Route path="/register" exact component={RegisterPage}/>
             <Route path="/confirm-email" component={ConfirmEmailPage}/>
-            <Route path="/order" component={OrderPage}/>
-            <Route path="/event" component={EventPage}/>
+            <Route path="/event" exact component={EventPage}/>
+            <Route path="/event/exact" exact component={EventExactPage}/>
             <Route path="/artist" component={ArtistPage}/>
 
+            <PrivateRoute path="/order" component={OrderPage}/>
             <PrivateRoute path="/user" exact component={UserPage}/>
             <PrivateRoute path="/logout" exact component={LogoutPage}/>
         </div>

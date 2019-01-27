@@ -25,7 +25,7 @@ class Event extends Component<IEventProps> {
                     <Link to={`/order?eventId=${event.eventId}`}>
                         <Button text={"Order"}/>
                     </Link>
-                    <Link to={`/event?eventId=${event.eventId}`}>
+                    <Link to={`/event/exact?eventId=${event.eventId}`}>
                         <Button text={"Event"}/>
                     </Link>
                 </div>

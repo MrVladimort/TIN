@@ -14,11 +14,10 @@ class Comment extends Component<IHeaderProps> {
 
         return (
             <div className="comment">
-                <h3>{event.name}</h3>
-                <h4>{`${user.name} ${user.surname}`}</h4>
+                <h3>Event: {event.name}</h3>
+                <h4>User: {`${user.name} ${user.surname}`} | Grade: {grade}</h4>
                 <h5>{text}</h5>
-                <h5>{grade}</h5>
-                <h5>{createdAt}</h5>
+                <h5>Date: {createdAt}</h5>
             </div>
         );
     }

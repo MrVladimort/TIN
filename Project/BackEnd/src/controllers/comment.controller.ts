@@ -4,10 +4,11 @@ import HttpError from "../errors/http.error";
 import CommentModel from "../models/comment.model";
 import EventModel from "../models/event.model";
 
-export async function getComment(req: Request, res: Response, next: NextFunction) {
-    const commentId = req.params.id;
-    const comment = await CommentModel.findOneByCommentId(commentId);
-    res.json({comment, success: true, status: 200});
+export async function getAllCommentsByEventId(req: Request, res: Response, next: NextFunction) {
+    const eventId = req.params.id;
+    const event = await EventModel.findOne({eventId});
+    const comments = await CommentModel.findAllByEvent(event.id);
+    res.json({comments, success: true, status: 200});
 }
 
 export async function getAllComments(req: Request, res: Response, next: NextFunction) {
@@ -26,7 +27,6 @@ export async function createComment(req: Request, res: Response, next: NextFunct
     const event = await EventModel.findOne({eventId});
     const comment = new CommentModel({Event: event.id, User: req.user.id, ...commentData});
     await comment.save();
-
     res.json({comment, success: true, status: 200});
 }
 
