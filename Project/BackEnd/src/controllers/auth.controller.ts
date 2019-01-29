@@ -1,10 +1,16 @@
 import {NextFunction, Request, Response} from "express";
 import HttpError from "../errors/http.error";
 import UserModel from "../models/user.model";
+import {validationResult} from "express-validator/check";
 
 const refreshTokens: Set<string> = new Set();
 
 export async function withEmailAndPass(req: Request, res: Response, next: NextFunction) {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throw new HttpError(432, "Not valid data");
+    }
+
     const {email, pass} = req.body;
     const user = await UserModel.findOneByEmail(email);
 

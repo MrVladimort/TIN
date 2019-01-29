@@ -2,12 +2,13 @@ import {body} from "express-validator/check";
 
 export const registerValidator = [
     body("surname")
-        .optional({nullable: true})
+        .exists()
         .isLength({min: 3, max: 40}),
     body("name")
-        .optional({nullable: true})
+        .exists()
         .isLength({min: 3, max: 40}),
     body("email")
+        .exists()
         .isEmail()
         .isLength({min: 5, max: 50}),
     body("pass")

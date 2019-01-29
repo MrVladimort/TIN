@@ -58,6 +58,8 @@ export async function createOrder(req: Request, res: Response, next: NextFunctio
 
     event.save();
     res.json({order: {...order.toJSON(), tickets}, success: true, status: 200});
+
+    res.json();
 }
 
 export async function deleteOrder(req: Request, res: Response, next: NextFunction) {
