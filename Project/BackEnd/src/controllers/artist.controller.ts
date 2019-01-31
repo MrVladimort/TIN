@@ -2,6 +2,7 @@ import {NextFunction, Request, Response} from "express";
 import {validationResult} from "express-validator/check";
 import HttpError from "../errors/http.error";
 import ArtistModel, {Artist} from "../models/artist.model";
+import EventArtistModel, {EventArtist} from "../models/eventArtist.model";
 
 export async function getArtist(req: Request, res: Response, next: NextFunction) {
     const artistId = req.params.id;
@@ -27,8 +28,23 @@ export async function createArtist(req: Request, res: Response, next: NextFuncti
     res.json({artist, success: true, status: 200});
 }
 
+export async function editArtist(req: Request, res: Response, next: NextFunction) {
+    const artistId = req.params.id;
+
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throw new HttpError(422, "Not valid data");
+    }
+
+    const artistData: Artist = req.body;
+    await ArtistModel.findOneAndUpdate({artistId}, artistData);
+
+    res.json({success: true, status: 200});
+}
+
 export async function deleteArtist(req: Request, res: Response, next: NextFunction) {
     const artistId = req.params.id;
     await ArtistModel.deleteOne({artistId});
+    await EventArtistModel.deleteMany({artistId});
     res.json({success: true, status: 200});
 }

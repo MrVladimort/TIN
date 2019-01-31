@@ -14,8 +14,14 @@ class Artist extends Component<IArtistProps> {
         const {artist} = this.props;
         return (
             <div className="artist" style={{flexDirection: "column"}}>
-                <h3>Artist: {artist.name}</h3>
+                <h3>Name: {artist.name}</h3>
                 <h4>Style: {artist.style}</h4>
+                <Link to={`/artist/edit?artistId=${artist.artistId}`}>
+                    <Button text={"Edit"}/>
+                </Link>
+                <Link to={`/artist/delete?artistId=${artist.artistId}`}>
+                    <Button text={"Delete"}/>
+                </Link>
             </div>
         );
     }

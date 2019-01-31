@@ -30,7 +30,7 @@ export class EventArtist extends Typegoose {
     public static async findAll(this: ModelType<EventArtist> & typeof EventArtist) {
         const eventAndArtist = await this.find().populate("Event").populate("Artist");
 
-        return eventAndArtist.reduce((accum, cur) => {
+        return eventAndArtist.reduce((accum: any[], cur: any) => {
             const index = accum.findIndex((eventData: IEventData) => eventData.event.eventId === cur.Event.eventId);
 
             if (index === -1) {
@@ -47,16 +47,16 @@ export class EventArtist extends Typegoose {
     }
 
     @staticMethod
-    public static async findAllByEvent(this: ModelType<EventArtist> & typeof EventArtist, Event: string) {
+    public static async findAllByEvent(this: ModelType<EventArtist> & typeof EventArtist, event: string) {
         return await this.find({
-            Event,
+            Event: event,
         });
     }
 
     @staticMethod
-    public static async findAllByArtist(this: ModelType<EventArtist> & typeof EventArtist, Artist: string) {
+    public static async findAllByArtist(this: ModelType<EventArtist> & typeof EventArtist, artist: string) {
         return await this.find({
-            Artist,
+            Artist: artist,
         });
     }
 

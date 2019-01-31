@@ -1,9 +1,18 @@
 import axios from 'axios';
 import mainConfig from "../config";
 
+interface IEventData {
+    name?: string;
+    location?: string;
+    date?: string;
+    placesCount?: number;
+    price?: number;
+}
+
 export default {
-    getEvent: (id: string | number) => axios.get(`${mainConfig.apiHost}/event/${id}`).then(res => res.data),
+    getEvent: (eventId: string | number) => axios.get(`${mainConfig.apiHost}/event/${eventId}`).then(res => res.data),
     getAllEvents: () => axios.get(`${mainConfig.apiHost}/event`).then(res => res.data),
-    createEvent: (eventData: any) => axios.post(`${mainConfig.apiHost}/event`, eventData).then(res => res.data),
-    deleteEvent: (id: string) => axios.delete(`${mainConfig.apiHost}/event/${id}`).then(res => res.data),
+    createEvent: (eventData: IEventData, artistsIds: number[]) => axios.post(`${mainConfig.apiHost}/event`, {eventData, artistsIds}).then(res => res.data),
+    editEvent: (eventId: string | number, eventData: IEventData) => axios.put(`${mainConfig.apiHost}/event/${eventId}`, eventData).then(res => res.data),
+    deleteEvent: (eventId: string | number) => axios.delete(`${mainConfig.apiHost}/event/${eventId}`).then(res => res.data),
 }

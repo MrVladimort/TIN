@@ -13,16 +13,16 @@ export class Ticket extends Typegoose {
     }
 
     @staticMethod
-    public static async findAllByOrder(this: ModelType<Ticket> & typeof Ticket, Order: string) {
+    public static async findAllByOrder(this: ModelType<Ticket> & typeof Ticket, order: string) {
         return await this.find({
-            Order,
+            Order: order,
         });
     }
 
     @staticMethod
-    public static async findAllByEvent(this: ModelType<Ticket> & typeof Ticket, Event: string) {
+    public static async findAllByEvent(this: ModelType<Ticket> & typeof Ticket, event: string) {
         return await this.find({
-            Event,
+            Event: event,
         });
     }
 

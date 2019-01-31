@@ -1,6 +1,5 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
-import {Link} from "react-router-dom";
 
 interface IButtonState {
 
@@ -10,6 +9,8 @@ interface IButtonProps {
     text: string;
     type?: "submit" | "reset";
     disabled?: boolean;
+    onClick?: any,
+    clickId?: number,
 }
 
 interface IButtonDefaultProps {
@@ -25,15 +26,13 @@ class Button extends React.Component<IButtonProps, IButtonState> {
     };
 
     render() {
-        const {text, type, disabled} = this.props;
+        const {text, type, disabled, clickId, onClick, children} = this.props;
 
         return (
-            <div>
-                <button className="button" type={type} disabled={disabled}>
-                    {text}
-                    {this.props.children}
-                </button>
-            </div>
+            <button className="button" onClick={onClick} type={type} disabled={disabled}>
+                {text}
+                {children}
+            </button>
         )
     }
 }
@@ -42,6 +41,7 @@ Button.propTypes = {
     text: PropTypes.string.isRequired,
     disabled: PropTypes.bool,
     type: PropTypes.string,
+    onClick: PropTypes.func,
 };
 
 export default Button;

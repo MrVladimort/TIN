@@ -16,7 +16,9 @@ class Event extends Component<IEventProps> {
         return (
             <div className="event">
                 <div style={{width: "60%", margin: "auto", padding: "15px"}}>
-                    <h1>{event.name}</h1>
+                    <h1>Name: {event.name} | Location: {event.location}</h1>
+                    <h1>Date: {event.date}</h1>
+                    <h1>Places count: {event.placesCount} | Price: {event.price}</h1>
                     {artists.map(artist => <div key={`event:${event.eventId} artist:${artist.artistId}`}>
                         <h3>{`Artist:${artist.name} Style: ${artist.style}`}</h3></div>)}
                 </div>
@@ -27,6 +29,12 @@ class Event extends Component<IEventProps> {
                     </Link>
                     <Link to={`/event/exact?eventId=${event.eventId}`}>
                         <Button text={"Event"}/>
+                    </Link>
+                    <Link to={`/event/delete?eventId=${event.eventId}`}>
+                        <Button text={"Delete"}/>
+                    </Link>
+                    <Link to={`/event/edit?eventId=${event.eventId}`}>
+                        <Button text={"Edit"}/>
                     </Link>
                 </div>
             </div>

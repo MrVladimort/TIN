@@ -1,21 +1,23 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
-import eventApi from "../../api/artist";
-import Artist from "../Artist";
+import eventApi from "../../../api/artist";
+import Artist from "../../Artist";
+import {Link} from "react-router-dom";
+import Button from "../../baseComponents/Button";
 
-interface IEventPageState {
+interface IArtistPageState {
     artists: any[]
 }
 
-interface IEventPageProps {
+interface IArtistPageProps {
 
 }
 
-class EventPage extends React.Component<IEventPageProps, IEventPageState> {
+class ArtistPage extends React.Component<IArtistPageProps, IArtistPageState> {
     static propTypes = {};
 
-    constructor(props: IEventPageProps) {
+    constructor(props: IArtistPageProps) {
         super(props);
 
         this.state = {
@@ -31,7 +33,10 @@ class EventPage extends React.Component<IEventPageProps, IEventPageState> {
         const {artists} = this.state;
         return (
             <div className="formContainer" style={{margin: "auto"}}>
-                <div className="eventsContainer">
+                <Link to={`/artist/add`}>
+                    <Button text={"Add Artist"}/>
+                </Link>
+                <div className="eventsContainer" style={{margin: "auto"}}>
                     {artists.length !== 0
                         ? artists.map(artist => <Artist artist={artist} key={`artist:${artist.artistId}`}/>)
                         : <h1>Loading</h1>}
@@ -43,4 +48,4 @@ class EventPage extends React.Component<IEventPageProps, IEventPageState> {
 
 const mapStateToProps = (state: any) => ({});
 
-export default connect(mapStateToProps)(EventPage);
+export default connect(mapStateToProps)(ArtistPage);

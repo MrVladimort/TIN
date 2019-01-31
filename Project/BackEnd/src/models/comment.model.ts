@@ -18,16 +18,16 @@ export class Comment extends Typegoose {
     }
 
     @staticMethod
-    public static async findAllByEvent(this: ModelType<Comment> & typeof Comment, Event: string) {
+    public static async findAllByEvent(this: ModelType<Comment> & typeof Comment, event: string) {
         return await this.find({
-            Event,
+            Event: event,
         }).populate("User").populate("Event");
     }
 
     @staticMethod
-    public static async findAllByUser(this: ModelType<Comment> & typeof Comment, User: string) {
+    public static async findAllByUser(this: ModelType<Comment> & typeof Comment, user: string) {
         return await this.find({
-            User,
+            User: user,
         }).populate("User").populate("Event");
     }
 

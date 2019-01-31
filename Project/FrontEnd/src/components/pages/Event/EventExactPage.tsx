@@ -1,12 +1,12 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
-import eventApi from "../../api/event";
-import commentApi from "../../api/comment";
-import Event from "../Event";
-import Input from "../baseComponents/Input";
-import Button from "../baseComponents/Button";
-import Comment from "../Comment";
+import eventApi from "../../../api/event";
+import commentApi from "../../../api/comment";
+import Event from "../../Event";
+import Input from "../../baseComponents/Input";
+import Button from "../../baseComponents/Button";
+import Comment from "../../Comment";
 
 interface IEventExactPageState {
     eventData: any;

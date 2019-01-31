@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 import PropTypes from 'prop-types';
+import {Link} from "react-router-dom";
+import Button from "./baseComponents/Button";
 
 interface IHeaderProps {
     comment: any
@@ -14,10 +16,17 @@ class Comment extends Component<IHeaderProps> {
 
         return (
             <div className="comment">
-                <h3>Event: {event.name}</h3>
+                <h3>Text: {text}</h3>
+                <h4>Event: {event.name}</h4>
                 <h4>User: {`${user.name} ${user.surname}`} | Grade: {grade}</h4>
-                <h5>{text}</h5>
                 <h5>Date: {createdAt}</h5>
+
+                <Link to={`/comment/edit?commentId=${comment.commentId}`}>
+                    <Button text={"Edit"}/>
+                </Link>
+                <Link to={`/comment/delete?commentId=${comment.commentId}`}>
+                    <Button text={"Delete"}/>
+                </Link>
             </div>
         );
     }
