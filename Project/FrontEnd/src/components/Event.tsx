@@ -24,7 +24,7 @@ class Event extends Component<IEventProps> {
                 </div>
 
                 <div style={{width: "40%", margin: "auto", padding: "15px"}}>
-                    <Link to={`/order?eventId=${event.eventId}`}>
+                    <Link to={`/order/add?eventId=${event.eventId}`}>
                         <Button text={"Order"}/>
                     </Link>
                     <Link to={`/event/exact?eventId=${event.eventId}`}>
@@ -35,6 +35,9 @@ class Event extends Component<IEventProps> {
                     </Link>
                     <Link to={`/event/edit?eventId=${event.eventId}`}>
                         <Button text={"Edit"}/>
+                    </Link>
+                    <Link to={`/event/artist?eventId=${event.eventId}`}>
+                        <Button text={"Edit Artists"}/>
                     </Link>
                 </div>
             </div>

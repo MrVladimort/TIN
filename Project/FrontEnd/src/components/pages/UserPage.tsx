@@ -63,10 +63,14 @@ class UserPage extends React.Component<IUserPageProps, IUserPageState> {
         const {name, surname, email} = this.props.user;
 
         return (
-            <div className="artist formContainer" style={{margin: "auto", flexDirection: "column"}}>
-                <h2 className="flexItem">Email: {email}</h2>
-                <h2 className="flexItem">Name: {name}</h2>
-                <h2 className="flexItem">Surname: {surname}</h2>
+            <div className="textContainer" style={{margin: "auto"}}>
+                <div className="eventsContainer" style={{margin: "auto", textAlign: "center"}}>
+                    <div className="event" style={{margin: "auto", flexDirection: "column"}}>
+                        <h2 className="flexItem">Email: {email}</h2>
+                        <h2 className="flexItem">Name: {name}</h2>
+                        <h2 className="flexItem">Surname: {surname}</h2>
+                    </div>
+                </div>
             </div>
         );
     };
@@ -100,6 +104,8 @@ class UserPage extends React.Component<IUserPageProps, IUserPageState> {
                                     <th>Name</th>
                                     <th>Surname</th>
                                     <th>Place number</th>
+                                    <th>Edit</th>
+                                    <th>Delete</th>
                                 </tr>
                                 {tickets.map((ticket: any) => {
                                         return (
@@ -107,6 +113,16 @@ class UserPage extends React.Component<IUserPageProps, IUserPageState> {
                                                 <th>{ticket.name}</th>
                                                 <th>{ticket.surname}</th>
                                                 <th>{ticket.number}</th>
+                                                <th>
+                                                    <Link to={`/ticket/edit?ticketId=${ticket.ticketId}`}>
+                                                        <Button text={"Edit ticket"}/>
+                                                    </Link>
+                                                </th>
+                                                <th>
+                                                    <Link to={`/ticket/delete?ticketId=${ticket.ticketId}`}>
+                                                        <Button text={"Delete ticket"}/>
+                                                    </Link>
+                                                </th>
                                             </tr>
                                         );
                                     }
@@ -115,6 +131,9 @@ class UserPage extends React.Component<IUserPageProps, IUserPageState> {
                             </table>
 
                             <h2>Total price: {eventPrice * tickets.length}</h2>
+                            <Link to={`/order/delete?orderId=${order.orderId}`}>
+                                <Button text={"Delete order"}/>
+                            </Link>
                             <Link to={`/event/exact?eventId=${event.eventId}`}>
                                 <Button text={"Event page"}/>
                             </Link>

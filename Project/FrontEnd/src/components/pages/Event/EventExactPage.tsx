@@ -68,7 +68,7 @@ class EventExactPage extends React.Component<IEventExactPageProps, IEventExactPa
                 {eventData && <Event artists={eventData.artists} event={eventData.event}/>}
                 <div className="formContainer" style={{margin: "auto"}}>
                     <form className="form" onSubmit={this.onCommentSubmit}>
-                        <Input name={"text"} placeholder={"Text"} required label={"Name *"}
+                        <Input name={"text"} placeholder={"Text"} required label={"Text *"}
                                onChange={this.handleChange}/>
                         <Input name={"grade"} placeholder={"Grade"} required label={"Grade *"}
                                onChange={this.handleChange}/>

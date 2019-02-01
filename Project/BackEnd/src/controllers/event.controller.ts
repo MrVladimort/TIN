@@ -44,7 +44,6 @@ export async function createEvent(req: Request, res: Response, next: NextFunctio
 
 export async function editEvent(req: Request, res: Response, next: NextFunction) {
     const eventId = req.params.id;
-    console.log("kek");
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         throw new HttpError(422, "Not valid data");
@@ -52,6 +51,35 @@ export async function editEvent(req: Request, res: Response, next: NextFunction)
 
     const eventData: Event = req.body;
     await EventModel.findOneAndUpdate({eventId}, eventData);
+
+    res.json({success: true, status: 200});
+}
+
+export async function editEventArtists(req: Request, res: Response, next: NextFunction) {
+    const eventId = req.params.id;
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        throw new HttpError(422, "Not valid data");
+    }
+
+    const {artistsToAdd, artistsToDelete} = req.body;
+
+    const event = await EventModel.findOne({eventId});
+
+    await Promise.all(artistsToAdd.map(async (idToAdd: number) => {
+        const artist = await ArtistModel.findOne({artistId: idToAdd});
+
+        const eventArtist = new EventArtistModel({
+            Event: event.id,
+            Artist: artist.id,
+            eventId: event.eventId,
+            artistId: idToAdd,
+        });
+
+        await eventArtist.save();
+    }));
+
+    await Promise.all(artistsToDelete.map(async (idToDelete: number) => await EventArtistModel.deleteOne({eventId, artistId: idToDelete})));
 
     res.json({success: true, status: 200});
 }

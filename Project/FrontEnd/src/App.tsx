@@ -15,13 +15,16 @@ import RegisterPage from "./components/pages/RegisterPage";
 import UserPage from "./components/pages/UserPage";
 import LogoutPage from "./components/pages/LogoutPage";
 import ConfirmEmailPage from "./components/pages/ConfirmEmailPage";
-import OrderPage from "./components/pages/OrderPage";
+
+import OrderAddPage from "./components/pages/Order/OrderAddPage";
+import OrderDeletePage from "./components/pages/Order/OrderDeletePage";
 
 import EventPage from "./components/pages/Event/EventPage";
 import EventExactPage from "./components/pages/Event/EventExactPage";
 import EventAddPage from "./components/pages/Event/EventAddPage";
 import EventDeletePage from "./components/pages/Event/EventDeletePage";
 import EventEditPage from "./components/pages/Event/EventEditPage";
+import EventArtistEditPage from "./components/pages/Event/EventArtistEditPage";
 
 import ArtistPage from "./components/pages/Artist/ArtistPage";
 import ArtistAddPage from "./components/pages/Artist/ArtistAddPage";
@@ -30,6 +33,9 @@ import ArtistEditPage from "./components/pages/Artist/ArtistEditPage";
 
 import CommentDeletePage from "./components/pages/Comment/CommentDeletePage";
 import CommentEditPage from "./components/pages/Comment/CommentEditPage";
+
+import TicketDeletePage from "./components/pages/Ticket/TicketDeletePage";
+import TicketEditPage from "./components/pages/Ticket/TicketEditPage";
 
 const App = ({location, dispatch, history}: any) => (
     <div className="reactBody">
@@ -42,19 +48,25 @@ const App = ({location, dispatch, history}: any) => (
 
             <Route path="/event" exact component={EventPage}/>
             <Route path="/event/exact" exact component={EventExactPage}/>
-            <Route path="/event/add" exact component={EventAddPage}/>
-            <Route path="/event/delete" exact component={EventDeletePage}/>
-            <Route path="/event/edit" exact component={EventEditPage}/>
+            <PrivateRoute path="/event/add" exact component={EventAddPage}/>
+            <PrivateRoute path="/event/delete" exact component={EventDeletePage}/>
+            <PrivateRoute path="/event/edit" exact component={EventEditPage}/>
+            <PrivateRoute path="/event/artist" exact component={EventArtistEditPage}/>
 
-            <Route path="/comment/delete" exact component={CommentDeletePage}/>
-            <Route path="/comment/edit" exact component={CommentEditPage}/>
+            <PrivateRoute path="/comment/delete" exact component={CommentDeletePage}/>
+            <PrivateRoute path="/comment/edit" exact component={CommentEditPage}/>
 
             <Route path="/artist" exact component={ArtistPage}/>
-            <Route path="/artist/add" exact component={ArtistAddPage}/>
-            <Route path="/artist/delete" exact component={ArtistDeletePage}/>
-            <Route path="/artist/edit" exact component={ArtistEditPage}/>
+            <PrivateRoute path="/artist/add" exact component={ArtistAddPage}/>
+            <PrivateRoute path="/artist/delete" exact component={ArtistDeletePage}/>
+            <PrivateRoute path="/artist/edit" exact component={ArtistEditPage}/>
 
-            <PrivateRoute path="/order" exact component={OrderPage}/>
+            <PrivateRoute path="/order/add" exact component={OrderAddPage}/>
+            <PrivateRoute path="/order/delete" exact component={OrderDeletePage}/>
+
+            <PrivateRoute path="/ticket/edit" exact component={TicketEditPage}/>
+            <PrivateRoute path="/ticket/delete" exact component={TicketDeletePage}/>
+
             <PrivateRoute path="/user" exact component={UserPage}/>
             <PrivateRoute path="/logout" exact component={LogoutPage}/>
         </div>

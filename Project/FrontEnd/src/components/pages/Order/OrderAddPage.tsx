@@ -1,10 +1,10 @@
 import * as React from 'react';
 import PropTypes from 'prop-types';
 import {connect} from "react-redux";
-import eventApi from "../../api/event";
-import Button from "../baseComponents/Button";
-import Input from "../baseComponents/Input";
-import orderApi from "../../api/order";
+import eventApi from "../../../api/event";
+import Button from "../../baseComponents/Button";
+import Input from "../../baseComponents/Input";
+import orderApi from "../../../api/order";
 
 interface IOrderPageProps {
     location: any,
@@ -23,7 +23,7 @@ interface IOrderPageState {
     }
 }
 
-class OrderPage extends React.Component<IOrderPageProps, IOrderPageState> {
+class OrderAddPage extends React.Component<IOrderPageProps, IOrderPageState> {
     static propTypes = {};
 
     constructor(props: IOrderPageProps) {
@@ -101,7 +101,7 @@ class OrderPage extends React.Component<IOrderPageProps, IOrderPageState> {
     }
 }
 
-OrderPage.propTypes = {
+OrderAddPage.propTypes = {
     history: PropTypes.shape({
         push: PropTypes.func.isRequired
     }).isRequired,
@@ -112,4 +112,4 @@ const mapStateToProps = (state: any) => ({
     user: state.user,
 });
 
-export default connect(mapStateToProps)(OrderPage);
+export default connect(mapStateToProps)(OrderAddPage);

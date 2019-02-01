@@ -14,5 +14,6 @@ export default {
     getAllEvents: () => axios.get(`${mainConfig.apiHost}/event`).then(res => res.data),
     createEvent: (eventData: IEventData, artistsIds: number[]) => axios.post(`${mainConfig.apiHost}/event`, {eventData, artistsIds}).then(res => res.data),
     editEvent: (eventId: string | number, eventData: IEventData) => axios.put(`${mainConfig.apiHost}/event/${eventId}`, eventData).then(res => res.data),
+    editEventArists: (eventId: string | number, eventArtistData: any) => axios.put(`${mainConfig.apiHost}/event/artist/${eventId}`, eventArtistData).then(res => res.data),
     deleteEvent: (eventId: string | number) => axios.delete(`${mainConfig.apiHost}/event/${eventId}`).then(res => res.data),
 }
