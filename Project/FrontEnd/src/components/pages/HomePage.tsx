@@ -12,7 +12,7 @@ interface IHomePageState {
 }
 
 interface IHomePageProps {
-
+    user: any;
 }
 
 class HomePage extends React.Component<IHomePageProps, IHomePageState> {
@@ -34,13 +34,14 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
 
     render() {
         const {events, comments} = this.state;
+        const {user} = this.props;
         return (
             <div className="container flexWrapper" style={{margin: "auto"}}>
                 <div className="eventsContainer" style={{flexDirection: "column"}}>
                     <h1 className="event">Events</h1>
 
                     {events.length !== 0
-                        ? events.map(eventData => <Event event={eventData.event} artists={eventData.artists} key={`event: ${eventData.event.eventId}`}/>)
+                        ? events.map(eventData => <Event user={user} event={eventData.event} artists={eventData.artists} key={`event: ${eventData.event.eventId}`}/>)
                         : <h1>Loading</h1>}
                 </div>
 
@@ -48,7 +49,7 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
                     <h1 className="comment">Comments</h1>
 
                     {comments.length !== 0
-                        ? comments.map(commentData => <Comment key={`comment: ${commentData.commentId}`} comment={commentData}/>)
+                        ? comments.map(commentData => <Comment user={user} key={`comment: ${commentData.commentId}`} comment={commentData}/>)
                         : <h1>Loading</h1>}
                 </div>
             </div>
@@ -56,6 +57,8 @@ class HomePage extends React.Component<IHomePageProps, IHomePageState> {
     }
 }
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: any) => ({
+    user: state.user,
+});
 
 export default connect(mapStateToProps)(HomePage);

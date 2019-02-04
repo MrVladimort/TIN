@@ -16,8 +16,9 @@ interface IEventAddPageState {
 interface IEventAddPageProps {
     history: {
         push: Function
-    },
-    location: any
+    };
+    location: any;
+    user: any;
 }
 
 class EventArtistEditPage extends React.Component<IEventAddPageProps, IEventAddPageState> {
@@ -93,18 +94,21 @@ class EventArtistEditPage extends React.Component<IEventAddPageProps, IEventAddP
     };
 
     renderArtist = (artist: any, index: number) => {
+        const {user} = this.props;
+
         return (
             <div key={`artist:${artist.artistId}`}>
-                <Artist artist={artist}/>
+                <Artist user={user} artist={artist}/>
                 <Button onClick={() => this.handleAddArtist(index)} text={"Add artist"}/>
             </div>
         );
     };
 
     renderEventArtist = (artist: any, index: number) => {
+        const {user} = this.props;
         return (
             <div key={`addedArtist:${index}`}>
-                <Artist artist={artist}/>
+                <Artist user={user} artist={artist}/>
                 <Button onClick={() => this.handleRemoveArtist(index)} text={"Remove artist"}/>
             </div>
         );
@@ -152,6 +156,8 @@ EventArtistEditPage.propTypes = {
     location: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: any) => ({
+    user: state.user,
+});
 
 export default connect(mapStateToProps)(EventArtistEditPage);

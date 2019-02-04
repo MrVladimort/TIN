@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 import './assets/css/default.min.css';
 
 import PrivateRoute from "./components/utilComponents/PrivateRoute";
+import AdminRoute from "./components/utilComponents/AdminRoute";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";

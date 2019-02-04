@@ -22,6 +22,7 @@ interface IEventExactPageProps {
     history: {
         push: Function
     };
+    user: any;
 }
 
 class EventExactPage extends React.Component<IEventExactPageProps, IEventExactPageState> {
@@ -63,9 +64,11 @@ class EventExactPage extends React.Component<IEventExactPageProps, IEventExactPa
 
     render() {
         const {eventData, comments, formData} = this.state;
+        const {user} = this.props;
+
         return (
             <div className="textContainer" style={{margin: "auto"}}>
-                {eventData && <Event artists={eventData.artists} event={eventData.event}/>}
+                {eventData && <Event user={user} artists={eventData.artists} event={eventData.event}/>}
                 <div className="formContainer" style={{margin: "auto"}}>
                     <form className="form" onSubmit={this.onCommentSubmit}>
                         <Input name={"text"} placeholder={"Text"} required label={"Text *"}
@@ -76,7 +79,7 @@ class EventExactPage extends React.Component<IEventExactPageProps, IEventExactPa
                         <Button text="Reset" type="reset"/>
                     </form>
                 </div>
-                {comments.map(comment => <Comment key={`comment: ${comment.commentId}`} comment={comment}/>)}
+                {comments.map(comment => <Comment user={user} key={`comment: ${comment.commentId}`} comment={comment}/>)}
             </div>
         )
     }
@@ -89,6 +92,8 @@ EventExactPage.propTypes = {
     location: PropTypes.object,
 };
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: any) => ({
+    user: state.user,
+});
 
 export default connect(mapStateToProps)(EventExactPage);

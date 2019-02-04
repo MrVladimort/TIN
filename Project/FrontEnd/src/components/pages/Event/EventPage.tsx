@@ -11,7 +11,7 @@ interface IEventPageState {
 }
 
 interface IEventPageProps {
-
+    user: any;
 }
 
 class EventPage extends React.Component<IEventPageProps, IEventPageState> {
@@ -32,6 +32,8 @@ class EventPage extends React.Component<IEventPageProps, IEventPageState> {
 
     render() {
         const {events} = this.state;
+        const {user} = this.props;
+
         return (
             <div className="container" style={{margin: "auto"}}>
                 <div className="textContainer" style={{margin: "auto"}}>
@@ -41,7 +43,7 @@ class EventPage extends React.Component<IEventPageProps, IEventPageState> {
                 </div>
                 <div className="eventsContainer" style={{margin: "auto"}}>
                     {events.length !== 0
-                        ? events.map(eventData => <Event event={eventData.event} artists={eventData.artists}
+                        ? events.map(eventData => <Event user={user} event={eventData.event} artists={eventData.artists}
                                                          key={`event:${eventData.event.eventId}`}/>)
                         : <h1>Loading</h1>}
                 </div>
@@ -50,6 +52,8 @@ class EventPage extends React.Component<IEventPageProps, IEventPageState> {
     }
 }
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: any) => ({
+    user: state.user,
+});
 
 export default connect(mapStateToProps)(EventPage);

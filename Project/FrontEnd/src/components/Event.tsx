@@ -5,14 +5,16 @@ import Button from "./baseComponents/Button";
 
 interface IEventProps {
     event: any,
-    artists: any[]
+    artists: any[],
+    user: any,
 }
 
 class Event extends Component<IEventProps> {
     static propTypes: any;
 
     render() {
-        const {event, artists} = this.props;
+        const {event, artists, user} = this.props;
+        console.log(user.userType);
         return (
             <div className="event">
                 <div style={{width: "60%", margin: "auto", padding: "15px"}}>
@@ -24,21 +26,21 @@ class Event extends Component<IEventProps> {
                 </div>
 
                 <div style={{width: "40%", margin: "auto", padding: "15px"}}>
-                    <Link to={`/order/add?eventId=${event.eventId}`}>
+                    {user.userType && <Link to={`/order/add?eventId=${event.eventId}`}>
                         <Button text={"Order"}/>
-                    </Link>
+                    </Link>}
                     <Link to={`/event/exact?eventId=${event.eventId}`}>
                         <Button text={"Event"}/>
                     </Link>
-                    <Link to={`/event/delete?eventId=${event.eventId}`}>
+                    {user.userType !== null && user.userType === 2 && <Link to={`/event/delete?eventId=${event.eventId}`}>
                         <Button text={"Delete"}/>
-                    </Link>
-                    <Link to={`/event/edit?eventId=${event.eventId}`}>
+                    </Link>}
+                    {user.userType !== null && user.userType === 2 && <Link to={`/event/edit?eventId=${event.eventId}`}>
                         <Button text={"Edit"}/>
-                    </Link>
-                    <Link to={`/event/artist?eventId=${event.eventId}`}>
+                    </Link>}
+                    {user.userType !== null && user.userType === 2 && <Link to={`/event/artist?eventId=${event.eventId}`}>
                         <Button text={"Edit Artists"}/>
-                    </Link>
+                    </Link>}
                 </div>
             </div>
         );
@@ -47,7 +49,8 @@ class Event extends Component<IEventProps> {
 
 Event.propTypes = {
     event: PropTypes.object.isRequired,
-    artists: PropTypes.array.isRequired
+    artists: PropTypes.array.isRequired,
+    user: PropTypes.object,
 };
 
 export default Event;

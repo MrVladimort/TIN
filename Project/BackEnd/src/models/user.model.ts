@@ -139,6 +139,7 @@ export class User extends Typegoose {
     @prop({required: true, unique: true}) public email: string;
     @prop() public passHash: string;
     @prop() public passSalt: string;
+    @prop({default: 1}) public userType: number;
     @prop({default: false}) public verified: boolean;
 
     @instanceMethod

@@ -69,6 +69,8 @@ ArtistAddPage.propTypes = {
     location: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: any) => ({
+    user: state.user,
+});
 
 export default connect(mapStateToProps)(ArtistAddPage);

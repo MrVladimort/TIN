@@ -7,11 +7,11 @@ import {Link} from "react-router-dom";
 import Button from "../../baseComponents/Button";
 
 interface IArtistPageState {
-    artists: any[]
+    artists: any[];
 }
 
 interface IArtistPageProps {
-
+    user: any;
 }
 
 class ArtistPage extends React.Component<IArtistPageProps, IArtistPageState> {
@@ -31,6 +31,8 @@ class ArtistPage extends React.Component<IArtistPageProps, IArtistPageState> {
     }
     render() {
         const {artists} = this.state;
+        const {user} = this.props;
+
         return (
             <div className="formContainer" style={{margin: "auto"}}>
                 <Link to={`/artist/add`}>
@@ -38,7 +40,7 @@ class ArtistPage extends React.Component<IArtistPageProps, IArtistPageState> {
                 </Link>
                 <div className="eventsContainer" style={{margin: "auto"}}>
                     {artists.length !== 0
-                        ? artists.map(artist => <Artist artist={artist} key={`artist:${artist.artistId}`}/>)
+                        ? artists.map(artist => <Artist user={user} artist={artist} key={`artist:${artist.artistId}`}/>)
                         : <h1>Loading</h1>}
                 </div>
             </div>
@@ -46,6 +48,8 @@ class ArtistPage extends React.Component<IArtistPageProps, IArtistPageState> {
     }
 }
 
-const mapStateToProps = (state: any) => ({});
+const mapStateToProps = (state: any) => ({
+    user: state.user,
+});
 
 export default connect(mapStateToProps)(ArtistPage);
